@@ -28,7 +28,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/luna-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -124,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "Sistema-Seguranca-Trabalho"
+  "defaultProject": "Sistema-Seguranca-Trabalho",
+  "cli": {
+    "analytics": "63d51165-0fb0-468e-a70c-7cab553161ad"
+  }
 }

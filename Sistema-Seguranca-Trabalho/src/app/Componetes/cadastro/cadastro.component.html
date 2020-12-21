@@ -1,0 +1,31 @@
+<p-card [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin': '0 auto', 'text-align': 'center'}">
+    <ng-template pTemplate="header">
+        <b>
+            <h2>
+                Cadastro
+            </h2>
+        </b>
+    </ng-template>
+    <span class="p-float-label">
+        <input id="nome-input" [style]="{'width': '100%'}" [(ngModel)]="nome" type="text" pInputText> 
+        <label for="nome-input">Nome</label>
+    </span>
+    <br>
+    <span class="p-float-label">
+        <input id="email-input" [style]="{'width': '100%'}" [(ngModel)]="email" type="text" pInputText> 
+        <label for="email-input">Email</label>
+    </span>
+    <br>    
+    <span class="p-float-label">
+        <input id="senha-input" [style]="{'width': '100%'}" [(ngModel)]="senha" type="text" pInputText> 
+        <label for="senha-input">Senha</label>
+    </span>
+    <br>
+    <span class="p-float-label">
+        <input id="re-senha-input" [style]="{'width': '100%'}" [(ngModel)]="re_senha" type="text" pInputText> 
+        <label for="re-senha-input">Repetir Senha</label>
+    </span>
+    <br>
+    <button pButton type="button" label="Cadastrar" (click)="teste()" [style]="{'width': '100%'}" ></button>
+
+</p-card>
