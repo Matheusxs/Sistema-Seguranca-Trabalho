@@ -17,7 +17,9 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  teste(){
-    this.authService.criarTeste(this.nome);
+  cadastrar(){
+    if(this.senha == this.re_senha){
+      this.authService.SignUp(this.email, this.senha, this.nome);
+    }
   }
 }

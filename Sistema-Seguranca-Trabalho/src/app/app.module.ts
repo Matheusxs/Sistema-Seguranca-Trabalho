@@ -5,6 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
+//Modulos do Firebase
+import { AngularFireModule } from '@angular/fire' ;
+import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from "@angular/fire/auth";
+
 //Modolos do Primeng
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
@@ -14,6 +19,7 @@ import {CardModule} from 'primeng/card';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Componetes/login/login.component';
 import { CadastroComponent } from './Componetes/cadastro/cadastro.component';
+import { from } from 'rxjs';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -31,6 +37,8 @@ const routes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseconfig),
+    AngularFireAuthModule,
     
     ButtonModule,
     InputTextModule,

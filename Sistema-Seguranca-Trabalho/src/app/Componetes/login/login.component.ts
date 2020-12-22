@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Servicos/auth.service';
 
 @Component({
@@ -8,15 +9,16 @@ import { AuthService } from 'src/app/Servicos/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   email: string = "";
   senha: string = "";
 
   ngOnInit(): void {
   }
-  teste(){
-    this.authService.mostrarTeste();
-  }
+  irParaCadastro(){
+    this.router.navigate(["cadastro"]);
 
+  }
 }
