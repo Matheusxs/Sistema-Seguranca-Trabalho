@@ -14,23 +14,27 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {CardModule} from 'primeng/card';
+import {PasswordModule} from 'primeng/password';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Componetes/login/login.component';
 import { CadastroComponent } from './Componetes/cadastro/cadastro.component';
-import { from } from 'rxjs';
+import { ValidarEmailComponent } from './Componetes/validar-email/validar-email.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'cadastro', component: CadastroComponent}
+  {path: 'cadastro', component: CadastroComponent},
+  {path: '', component: LoginComponent},
+  {path: 'validar-email', component: ValidarEmailComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CadastroComponent
+    CadastroComponent,
+    ValidarEmailComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,8 @@ const routes: Routes = [
     
     ButtonModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    PasswordModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

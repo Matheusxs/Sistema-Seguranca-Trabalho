@@ -1,5 +1,6 @@
 <p-card [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin': '0 auto', 'text-align': 'center'}">
     <ng-template pTemplate="header">
+        <br>
         <b>
             <h2>
                 Login
@@ -13,12 +14,15 @@
     </span>
     <br>    
     <span class="p-float-label">
-        <input id="senha-input" [style]="{'width': '100%'}" [(ngModel)]="senha" type="text" pInputText> 
+        <input id="senha-input" [style]="{'width': '100%'}" [(ngModel)]="senha" [feedback]=false type="password" pPassword> 
         <label for="senha-input">Senha</label>
     </span>
     <br>
-    <button pButton type="button" label="Login"  [style]="{'width': '100%'}" ></button>
+    <button pButton type="button" label="Login" (click)="login()"  [style]="{'width': '100%'}" ></button>
     <br>
     <br>
-    <button pButton type="button" label="Cadastrar" class="p-button-outlined p-button-secondary" (click)="irParaCadastro()" [style]="{'width': '100%'}" ></button>
+    <button pButton type="button" label="Login com Google" icon="pi pi-google" class="p-button-outlined p-button-rounded p-button-info" (click)="authService.GoogleAuth()" [style]="{'width': '100%'}" ></button>
+    <br>
+    <br>
+    <button pButton type="button" label="Cadastrar" class="p-button-outlined p-button-primary" (click)="irParaCadastro()" [style]="{'width': '100%'}" ></button>
 </p-card>

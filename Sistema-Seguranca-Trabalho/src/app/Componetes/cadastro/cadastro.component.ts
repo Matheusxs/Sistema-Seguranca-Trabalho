@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/Servicos/auth.service';
 })
 export class CadastroComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
   nome: string = "";
   email: string = "";
 

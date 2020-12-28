@@ -27,6 +27,7 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       }
     });
+    
   }
 
   // Sign in with email/password

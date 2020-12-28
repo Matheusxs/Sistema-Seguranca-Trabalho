@@ -1,0 +1,24 @@
+<p-card [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin': '0 auto', 'text-align': 'center'}">
+    <ng-template pTemplate="header">
+        <br>
+        <b>
+            <h2>
+                Validar Email
+            </h2>
+        </b>
+    </ng-template>
+    <div *ngIf="authService.userData as user">
+        <br>  
+        <p>
+            Agora que você realizou o cadastro em nosso sistema, Por favor valide seu email no endereço cadastrado abaixo.
+        </p>  
+        <br>
+        <br>
+        <button pButton type="button" label="{{user.email}}" class="p-button-outlined p-button-rounded p-button-info" [style]="{'width': '100%'}" ></button>
+        <br>
+        <br>
+        <p>
+            Caso não tenha recebido o email de validação, Clique no botão acima.
+        </p>
+    </div>
+</p-card>

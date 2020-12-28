@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/Servicos/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router) { }
 
   email: string = "";
@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   }
   irParaCadastro(){
     this.router.navigate(["cadastro"]);
-
+  } 
+  login(){
+    this.authService.SignIn(this.email, this.senha);
   }
 }
