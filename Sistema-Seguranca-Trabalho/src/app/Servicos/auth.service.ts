@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   userData: any; // Save logged in user data
-
+  userReady = false;
   constructor(public afs: AngularFirestore,
               public afAuth: AngularFireAuth,
               private router: Router,  
@@ -41,7 +41,7 @@ export class AuthService {
         let user_cache = JSON.parse(localStorage.getItem('user')!);
         user_cache.emailVerified = result.user?.emailVerified;
         localStorage.setItem('user', JSON.stringify(user_cache));
-
+        this.userReady = true;
         this.SetUserData(result.user, '');
       }).catch((error) => {
         window.alert(error.message)
@@ -53,6 +53,7 @@ export class AuthService {
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
+        this.userReady = true;
         this.SendVerificationMail();
         this.SetUserData(result.user, nome);
       }).catch((error) => {
@@ -97,9 +98,10 @@ export class AuthService {
   AuthLogin(provider: any) {
     return this.afAuth.signInWithPopup(provider)
     .then((result) => {
-       this.ngZone.run(() => {
+      this.ngZone.run(() => {
           this.router.navigate(['']);
-        })
+      })
+      this.userReady = true;
       this.SetUserData(result.user, '');
     }).catch((error) => {
       window.alert(error)
@@ -133,7 +135,8 @@ export class AuthService {
       localStorage.removeItem('user');
       this.userData = null;
       localStorage.clear();
-      this.router.navigate(['']);
+      this.userReady = false;
+      this.router.navigate(['login']);
     })
   }
 
