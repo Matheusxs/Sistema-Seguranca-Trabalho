@@ -25,11 +25,16 @@ import { CadastroComponent } from './Componetes/cadastro/cadastro.component';
 import { ValidarEmailComponent } from './Componetes/validar-email/validar-email.component';
 import { MenuComponent } from './Componetes/menu/menu.component';
 import { HomeComponent } from './Componetes/home/home.component';
+import { RodapeComponent } from './Componetes/rodape/rodape.component';
+import { AdminComponent } from './Componetes/admin/admin.component';
+import { MenuAdminComponent } from './Componetes/menu-admin/menu-admin.component';
+
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'cadastro', component: CadastroComponent},
   {path: '', component: HomeComponent},
+  {path: 'admin', component: AdminComponent},
   {path: 'validar-email', component: ValidarEmailComponent}
 ];
 
@@ -40,7 +45,10 @@ const routes: Routes = [
     CadastroComponent,
     ValidarEmailComponent,
     MenuComponent,
-    HomeComponent
+    HomeComponent,
+    RodapeComponent,
+    AdminComponent,
+    MenuAdminComponent,
   ],
   imports: [
     BrowserModule,

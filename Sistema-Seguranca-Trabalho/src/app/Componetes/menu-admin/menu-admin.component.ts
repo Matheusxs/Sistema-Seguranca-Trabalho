@@ -1,29 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/Servicos/auth.service';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-menu-admin',
+  templateUrl: './menu-admin.component.html',
+  styleUrls: ['./menu-admin.component.css']
 })
-
-export class MenuComponent implements OnInit {
+export class MenuAdminComponent implements OnInit {
   items: MenuItem[] = [];
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
     this.items = [
       {
-          label: 'Área do aluno',
-          icon: 'pi pi-user'
+          label: 'Turmas',
+          icon: 'pi pi-users'
       },
       {
-          label: 'Informações',
+          label: 'Forum',
           icon: 'pi pi-book'
       },
       {
-        label: 'Turma',
+        label: 'Mural',
         icon: 'pi pi-users'
       },
     ];

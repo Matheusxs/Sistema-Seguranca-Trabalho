@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  userData: any; // Save logged in user data
+  userData: any;// Save logged in user data
   userReady = false;
   constructor(public afs: AngularFirestore,
               public afAuth: AngularFireAuth,
@@ -20,6 +20,10 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
+        this.userData.admin = false;
+        if(this.userData.uid == "LeUa9ybfQugsWBvitnKAg4Wau0X2"){
+          this.userData.admin = true;
+        }
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
       } else {
@@ -27,7 +31,6 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       }
     });
-    
   }
 
   // Sign in with email/password
@@ -37,12 +40,19 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['']);
         });
+        this.userData = result.user;
 
         let user_cache = JSON.parse(localStorage.getItem('user')!);
         user_cache.emailVerified = result.user?.emailVerified;
         localStorage.setItem('user', JSON.stringify(user_cache));
         this.userReady = true;
-        this.SetUserData(result.user, '');
+
+       
+        this.userData.admin = false;
+        if(this.userData.uid == "LeUa9ybfQugsWBvitnKAg4Wau0X2"){
+          this.userData.admin = true;
+        }
+
       }).catch((error) => {
         window.alert(error.message)
       })
