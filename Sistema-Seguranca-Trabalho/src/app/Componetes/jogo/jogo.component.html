@@ -1,0 +1,29 @@
+<app-menu></app-menu>
+<div class="wrapper" >
+
+</div>
+<div class="card">
+    <h2 style="color:white">Atividade Avaliativa</h2>
+    <p-tabView>
+        <p-tabPanel [header]="i+1+''"  *ngFor="let item of questoes; let i = index">
+            <p>Questão 1</p>
+            <p-splitter [style]="{'height': '300px'}" [minSizes]="[50,50]">
+                <ng-template pTemplate>
+                    <div><img [src]="item.imagem"></div>
+                </ng-template>
+                <ng-template pTemplate>
+                    <div [style]="{'width': '100%'}">
+                        <div  *ngFor="let resposta of item.respostas">
+                            <button pButton type="button" [label]="resposta" [style]="{'width': '100%','height': '20%'}"></button>
+                            
+                        </div>
+                        <br>
+                    </div>
+                </ng-template>
+            </p-splitter>
+        </p-tabPanel>
+    </p-tabView>
+    
+</div>
+
+<app-rodape></app-rodape>

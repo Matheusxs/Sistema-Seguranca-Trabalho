@@ -16,7 +16,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {CardModule} from 'primeng/card';
 import {PasswordModule} from 'primeng/password';
 import {MenubarModule} from 'primeng/menubar';
-
+import {TabViewModule} from 'primeng/tabview';
+import {DividerModule} from 'primeng/divider';
+import {SplitterModule} from 'primeng/splitter';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
@@ -28,6 +30,8 @@ import { HomeComponent } from './Componetes/home/home.component';
 import { RodapeComponent } from './Componetes/rodape/rodape.component';
 import { AdminComponent } from './Componetes/admin/admin.component';
 import { MenuAdminComponent } from './Componetes/menu-admin/menu-admin.component';
+import { TurmasComponent } from './Componetes/turmas/turmas.component';
+import { JogoComponent } from './Componetes/jogo/jogo.component';
 
 
 const routes: Routes = [
@@ -35,7 +39,8 @@ const routes: Routes = [
   {path: 'cadastro', component: CadastroComponent},
   {path: '', component: HomeComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'validar-email', component: ValidarEmailComponent}
+  {path: 'validar-email', component: ValidarEmailComponent},
+  {path: 'jogo', component: JogoComponent}
 ];
 
 @NgModule({
@@ -49,6 +54,8 @@ const routes: Routes = [
     RodapeComponent,
     AdminComponent,
     MenuAdminComponent,
+    TurmasComponent,
+    JogoComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +70,9 @@ const routes: Routes = [
     CardModule,
     PasswordModule,
     MenubarModule,
+    TabViewModule,
+    DividerModule,
+    SplitterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
