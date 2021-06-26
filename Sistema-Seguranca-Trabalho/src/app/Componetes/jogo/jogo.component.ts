@@ -11,8 +11,10 @@ import { AuthService } from 'src/app/Servicos/auth.service';
 })
 export class JogoComponent implements OnInit {
 
-  questoes: Questao[] = [new Questao('https://loremflickr.com/300/300', 'resposta')];
-    
+  questoes: Questao[] = [];
+
+  questoesExistentes: string[] = [];
+
     constructor(private authService: AuthService, 
       private router: Router) {
 
@@ -39,6 +41,14 @@ export class JogoComponent implements OnInit {
         }
       });
     }*/
+    for (let index = 0; index < 10; index++) {
+      let questao = new Questao(this.questoesExistentes);
+      this.questoes.push(questao);
+      this.questoesExistentes.push(questao.id);
+    }
+  }
+  checarResposta(index: number, questao: Questao){
+    questao.indexEscolhido = index;
   }
 }
 

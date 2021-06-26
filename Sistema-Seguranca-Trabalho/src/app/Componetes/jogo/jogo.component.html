@@ -6,21 +6,34 @@
     <h2 style="color:white">Atividade Avaliativa</h2>
     <p-tabView>
         <p-tabPanel [header]="i+1+''"  *ngFor="let item of questoes; let i = index">
-            <p>Questão 1</p>
-            <p-splitter [style]="{'height': '300px'}" [minSizes]="[50,50]">
-                <ng-template pTemplate>
-                    <div><img [src]="item.imagem"></div>
-                </ng-template>
-                <ng-template pTemplate>
-                    <div [style]="{'width': '100%'}">
-                        <div  *ngFor="let resposta of item.respostas">
-                            <button pButton type="button" [label]="resposta" [style]="{'width': '100%','height': '20%'}"></button>
-                            
-                        </div>
-                        <br>
-                    </div>
-                </ng-template>
-            </p-splitter>
+            <h3>Qual o Significado Desta Placa?</h3>
+           
+            
+            <div class="p-d-flex p-jc-center">
+                <img [src]="item.imagem">
+            </div>
+            
+            <br>
+            <div [style]="{'width': '100%'}">
+                <div  *ngFor="let resposta of item.respostas; let i = index">
+                    <button pButton type="button" *ngIf="item.indexEscolhido == i" class="p-button-info" (click)="checarResposta(i, item)" [label]="resposta" [style]="{'width': '100%','height': '20%'}"></button>
+                    <button pButton type="button" *ngIf="item.indexEscolhido != i" (click)="checarResposta(i, item)" [label]="resposta" [style]="{'width': '100%','height': '20%'}"></button>
+                    
+                </div>
+                <br>
+            </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Submeter">
+            <p-card>
+                <h3 style="text-align: center;">
+                    Clique no Botão Abaixo Para Submeter
+                </h3>
+                <br>
+                <div class="p-d-flex p-jc-center">
+                    <button pButton type="button" label="Submeter" class="p-button-warning"></button>
+                </div>
+            </p-card>
         </p-tabPanel>
     </p-tabView>
     
