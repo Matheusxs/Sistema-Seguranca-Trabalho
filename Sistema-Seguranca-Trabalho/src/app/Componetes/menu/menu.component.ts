@@ -28,10 +28,17 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-users'
       },
       {
-        label: 'JOGO',
+        label: 'Jogo Memoria',
         icon: 'pi pi-users',
         command: (event) => {
-          this.router.navigate(['jogo']);
+          this.router.navigate(['jogo-memoria']);
+        }
+      },
+      {
+        label: 'Atividade',
+        icon: 'pi pi-users',
+        command: (event) => {
+          this.router.navigate(['atividade']);
         }
       },
     ];

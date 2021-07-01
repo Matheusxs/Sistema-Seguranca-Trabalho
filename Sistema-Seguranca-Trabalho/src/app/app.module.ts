@@ -32,6 +32,7 @@ import { AdminComponent } from './Componetes/admin/admin.component';
 import { MenuAdminComponent } from './Componetes/menu-admin/menu-admin.component';
 import { TurmasComponent } from './Componetes/turmas/turmas.component';
 import { JogoComponent } from './Componetes/jogo/jogo.component';
+import { JogoMemoriaComponent } from './Componetes/jogo-memoria/jogo-memoria.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'validar-email', component: ValidarEmailComponent},
-  {path: 'jogo', component: JogoComponent}
+  {path: 'atividade', component: JogoComponent},
+  {path: 'jogo-memoria', component: JogoMemoriaComponent}
 ];
 
 @NgModule({
@@ -56,6 +58,7 @@ const routes: Routes = [
     MenuAdminComponent,
     TurmasComponent,
     JogoComponent,
+    JogoMemoriaComponent,
   ],
   imports: [
     BrowserModule,
