@@ -3,6 +3,7 @@ import { Carta } from 'src/app/Models/Carta';
 import { timer } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FimJogoMemoriaComponent } from '../fim-jogo-memoria/fim-jogo-memoria.component';
+import { IniciarJogoMemoriaComponent } from '../iniciar-jogo-memoria/iniciar-jogo-memoria.component';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class JogoMemoriaComponent implements OnInit {
   timerSegundos: number = 0;
   timerMinutos: number = 0;
   
+  inicioJogo: boolean = false;
   fimDeJogo: boolean = false;
 
   ngOnInit(): void {
@@ -31,6 +33,8 @@ export class JogoMemoriaComponent implements OnInit {
 
     this.cartas = this.shuffle(this.cartas);
     
+    this.mostrarIniciar();
+
     this.executarCronometro();
   }
 
@@ -109,7 +113,10 @@ export class JogoMemoriaComponent implements OnInit {
         timerCronometro.unsubscribe();
         return;
       }
-      this.timerSegundos++;
+
+      if (this.inicioJogo) {
+        this.timerSegundos++;
+      }
 
       if (this.timerSegundos == 60) {
         this.timerSegundos = 0;
@@ -141,5 +148,16 @@ export class JogoMemoriaComponent implements OnInit {
         tempo: this.timerString
       },
     });
+  }
+  private mostrarIniciar() {
+    const ref = this.dialogService.open(IniciarJogoMemoriaComponent, {
+      header: '',
+      width: '70%',
+      closable: false
+    });
+
+    ref.onClose.subscribe(() =>{
+      this.inicioJogo = true;
+    })
   }
 }
