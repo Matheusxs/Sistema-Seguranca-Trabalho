@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Modulos do Firebase
 import { AngularFireModule } from '@angular/fire' ;
@@ -19,6 +20,7 @@ import {MenubarModule} from 'primeng/menubar';
 import {TabViewModule} from 'primeng/tabview';
 import {DividerModule} from 'primeng/divider';
 import {SplitterModule} from 'primeng/splitter';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
@@ -33,7 +35,7 @@ import { MenuAdminComponent } from './Componetes/menu-admin/menu-admin.component
 import { TurmasComponent } from './Componetes/turmas/turmas.component';
 import { JogoComponent } from './Componetes/jogo/jogo.component';
 import { JogoMemoriaComponent } from './Componetes/jogo-memoria/jogo-memoria.component';
-
+import { FimJogoMemoriaComponent } from './Componetes/fim-jogo-memoria/fim-jogo-memoria.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -59,6 +61,7 @@ const routes: Routes = [
     TurmasComponent,
     JogoComponent,
     JogoMemoriaComponent,
+    FimJogoMemoriaComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ const routes: Routes = [
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseconfig),
     AngularFireAuthModule,
+    BrowserAnimationsModule,
     
     ButtonModule,
     InputTextModule,
@@ -76,8 +80,12 @@ const routes: Routes = [
     TabViewModule,
     DividerModule,
     SplitterModule,
+    DynamicDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    FimJogoMemoriaComponent
+]
 })
 export class AppModule { }

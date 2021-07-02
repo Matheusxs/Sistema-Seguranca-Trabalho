@@ -1,24 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Carta } from 'src/app/Models/Carta';
 import { timer } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FimJogoMemoriaComponent } from '../fim-jogo-memoria/fim-jogo-memoria.component';
+
 
 @Component({
   selector: 'app-jogo-memoria',
   templateUrl: './jogo-memoria.component.html',
-  styleUrls: ['./jogo-memoria.component.css']
+  styleUrls: ['./jogo-memoria.component.css'],
+  providers: [DialogService]
 })
 export class JogoMemoriaComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogService: DialogService) { }
 
   cartas: Carta[] = [];
   cartasSelecionadas: number[] = [];
+
+  timerString: string = "";
+  timerSegundos: number = 0;
+  timerMinutos: number = 0;
+  
+  fimDeJogo: boolean = false;
 
   ngOnInit(): void {
     for (let index = 0; index < 16; index++) {
       this.cartas.push(new Carta(this.cartas));
     }
+
     this.cartas = this.shuffle(this.cartas);
+    
+    this.executarCronometro();
   }
 
   public selecionarCarta(carta: Carta){
@@ -31,7 +44,8 @@ export class JogoMemoriaComponent implements OnInit {
           this.cartas[this.cartasSelecionadas[1]].isCorreto = true;
           this.resertarCartasSelecionadas();
           if (this.checarFimDeJogo()) {
-            alert("Fim de Jogo");
+            this.fimDeJogo = true;
+            this.mostraResultado();
           }
         }else{
           let time = timer(1000, 1000).subscribe(() =>{
@@ -87,5 +101,45 @@ export class JogoMemoriaComponent implements OnInit {
     }
   
     return array;
+  }
+  
+  private executarCronometro(){
+    let timerCronometro = timer(1000,1000).subscribe(() => {
+      if (this.fimDeJogo) {
+        timerCronometro.unsubscribe();
+        return;
+      }
+      this.timerSegundos++;
+
+      if (this.timerSegundos == 60) {
+        this.timerSegundos = 0;
+        this.timerMinutos++;
+      }
+      this.timerString = "";
+      if (this.timerMinutos < 10) {
+        this.timerString += "0" + this.timerMinutos;
+      }else{
+        this.timerString += "" + this.timerMinutos;
+      }
+
+      this.timerString += ":";
+
+      if (this.timerSegundos < 10) {
+        this.timerString += "0" + this.timerSegundos;
+      }else{
+        this.timerString += "" + this.timerSegundos;
+      }
+    });
+  }
+  
+  private mostraResultado() {
+    const ref = this.dialogService.open(FimJogoMemoriaComponent, {
+      header: '',
+      width: '70%',
+      closable: false,
+      data: {
+        tempo: this.timerString
+      },
+    });
   }
 }
