@@ -37,6 +37,8 @@ import { JogoComponent } from './Componetes/jogo/jogo.component';
 import { JogoMemoriaComponent } from './Componetes/jogo-memoria/jogo-memoria.component';
 import { FimJogoMemoriaComponent } from './Componetes/fim-jogo-memoria/fim-jogo-memoria.component';
 import { IniciarJogoMemoriaComponent } from './Componetes/iniciar-jogo-memoria/iniciar-jogo-memoria.component';
+import { ConfigurarJogoMemoriaComponent } from './Componetes/configurar-jogo-memoria/configurar-jogo-memoria.component';
+
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -64,6 +66,7 @@ const routes: Routes = [
     JogoMemoriaComponent,
     FimJogoMemoriaComponent,
     IniciarJogoMemoriaComponent,
+    ConfigurarJogoMemoriaComponent,
   ],
   imports: [
     BrowserModule,

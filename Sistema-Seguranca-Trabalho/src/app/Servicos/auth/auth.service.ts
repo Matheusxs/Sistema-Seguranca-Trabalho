@@ -134,9 +134,14 @@ export class AuthService {
     if(nome != ''){
       userData.nome = nome;
     }
-    return userRef.set(userData, {
+    userRef.set(userData, {
       merge: true
-    });
+    }).then(() =>{
+      
+    }).catch((e)=>{
+      console.error("Falha ao Criar Aluno, Favor Contatar Suporte",e);
+    })
+
   }
 
   // Sign out 

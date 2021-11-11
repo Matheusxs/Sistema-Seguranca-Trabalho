@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/Servicos/auth.service';
+import { AuthService } from 'src/app/Servicos/auth/auth.service';
 
 @Component({
   selector: 'app-cadastro',

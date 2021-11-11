@@ -4,6 +4,9 @@ import { timer } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FimJogoMemoriaComponent } from '../fim-jogo-memoria/fim-jogo-memoria.component';
 import { IniciarJogoMemoriaComponent } from '../iniciar-jogo-memoria/iniciar-jogo-memoria.component';
+import { AuthService } from 'src/app/Servicos/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
 
 
 @Component({
@@ -14,19 +17,55 @@ import { IniciarJogoMemoriaComponent } from '../iniciar-jogo-memoria/iniciar-jog
 })
 export class JogoMemoriaComponent implements OnInit {
 
-  constructor(public dialogService: DialogService) { }
+  constructor(public dialogService: DialogService, public authService: AuthService, private router: Router, private arouter: ActivatedRoute, private jogoService: JogosService) { 
+  }
 
   cartas: Carta[] = [];
   cartasSelecionadas: number[] = [];
 
   timerString: string = "";
   timerSegundos: number = 0;
-  timerMinutos: number = 0;
+  //timerMinutos: number = 0;
   
   inicioJogo: boolean = false;
   fimDeJogo: boolean = false;
+  
+  userReady = false;
+  jogador = {
+    nome: "",
+    pontuacao: 0,
+    tempo: 0
+  }
+  pontosPorAcerto = 1000;
+  dificuldade = 1;
 
   ngOnInit(): void {
+    this.arouter.queryParamMap
+    .subscribe((params) => {
+      this.jogoService.getJogo(String(params.get("id"))).subscribe((jogo: any) =>{
+        this.dificuldade = jogo.dificuldade;
+        console.log(jogo);      
+      })
+    }
+  );
+  let time = timer(200, 1000).subscribe(() =>{
+    if(this.authService.userData != undefined){
+      this.userReady = true;
+      time.unsubscribe();
+    }
+  });
+  let time2 = timer(200, 1000).subscribe(() =>{
+    if(this.userReady){
+      this.jogador = {
+        nome: this.authService.userData.displayName,
+        pontuacao: 0,
+        tempo: 0
+      }
+      time2.unsubscribe();
+      console.log("UserDataJogoDaMemoria",this.jogador);
+    }
+  });
+   
     for (let index = 0; index < 16; index++) {
       this.cartas.push(new Carta(this.cartas));
     }
@@ -34,8 +73,9 @@ export class JogoMemoriaComponent implements OnInit {
     this.cartas = this.shuffle(this.cartas);
     
     this.mostrarIniciar();
-
     this.executarCronometro();
+  
+   
   }
 
   public selecionarCarta(carta: Carta){
@@ -46,9 +86,14 @@ export class JogoMemoriaComponent implements OnInit {
         if (this.checarPar()) {
           this.cartas[this.cartasSelecionadas[0]].isCorreto = true;
           this.cartas[this.cartasSelecionadas[1]].isCorreto = true;
+          this.jogador.pontuacao+= Math.max(this.pontosPorAcerto,100);
+          console.log("pontos Ganhos",Math.max(this.pontosPorAcerto,100));
           this.resertarCartasSelecionadas();
           if (this.checarFimDeJogo()) {
             this.fimDeJogo = true;
+            this.jogador.tempo= this.timerSegundos
+            console.log(this.jogador)
+
             this.mostraResultado();
           }
         }else{
@@ -116,26 +161,35 @@ export class JogoMemoriaComponent implements OnInit {
 
       if (this.inicioJogo) {
         this.timerSegundos++;
+        if (this.timerSegundos%( Math.ceil(30/this.dificuldade))==0) {
+          this.pontosPorAcerto -= Math.ceil(50*this.dificuldade)
+          console.log("pontos", this.pontosPorAcerto)
+          console.log("dificuldade", this.dificuldade)
+        }
       }
+      
 
-      if (this.timerSegundos == 60) {
-        this.timerSegundos = 0;
-        this.timerMinutos++;
-      }
-      this.timerString = "";
-      if (this.timerMinutos < 10) {
-        this.timerString += "0" + this.timerMinutos;
-      }else{
-        this.timerString += "" + this.timerMinutos;
-      }
+      this.timerString = ""
+      this.timerString += Math.floor(this.timerSegundos /60);
+      this.timerString += ":" + (this.timerSegundos - Math.floor(this.timerSegundos /60)*60);
+      // if (this.timerSegundos == 60) {
+      //   this.timerSegundos = 0;
+      //   this.timerMinutos++;
+      // }
+      // this.timerString = "";
+      // if (this.timerMinutos < 10) {
+      //   this.timerString += "0" + this.timerMinutos;
+      // }else{
+      //   this.timerString += "" + this.timerMinutos;
+      // }
 
-      this.timerString += ":";
+      // this.timerString += ":";
 
-      if (this.timerSegundos < 10) {
-        this.timerString += "0" + this.timerSegundos;
-      }else{
-        this.timerString += "" + this.timerSegundos;
-      }
+      // if (this.timerSegundos < 10) {
+      //   this.timerString += "0" + this.timerSegundos;
+      // }else{
+      //   this.timerString += "" + this.timerSegundos;
+      // }
     });
   }
   
