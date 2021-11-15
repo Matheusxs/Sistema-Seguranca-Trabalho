@@ -7,6 +7,7 @@ import { IniciarJogoMemoriaComponent } from '../iniciar-jogo-memoria/iniciar-jog
 import { AuthService } from 'src/app/Servicos/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
+import { ConfigurarJogoMemoriaComponent } from '../configurar-jogo-memoria/configurar-jogo-memoria.component';
 
 
 @Component({
@@ -20,12 +21,15 @@ export class JogoMemoriaComponent implements OnInit {
   constructor(public dialogService: DialogService, public authService: AuthService, private router: Router, private arouter: ActivatedRoute, private jogoService: JogosService) { 
   }
 
+  refJanela: any = null;
+
   cartas: Carta[] = [];
   cartasSelecionadas: number[] = [];
 
+  tempoMaximo: number = 260;
+
   timerString: string = "";
   timerSegundos: number = 0;
-  //timerMinutos: number = 0;
   
   inicioJogo: boolean = false;
   fimDeJogo: boolean = false;
@@ -43,8 +47,16 @@ export class JogoMemoriaComponent implements OnInit {
     this.arouter.queryParamMap
     .subscribe((params) => {
       this.jogoService.getJogo(String(params.get("id"))).subscribe((jogo: any) =>{
-        this.dificuldade = jogo.dificuldade;
-        console.log(jogo);      
+        if(jogo){
+          this.timerSegundos = jogo.tempo;
+          console.log(jogo);
+        }else{
+          console.error("Jogo não encontrado");
+          this.router.navigate(['/']);
+          if(this.refJanela){
+            this.refJanela.close();
+          }
+        }
       })
     }
   );
@@ -62,7 +74,6 @@ export class JogoMemoriaComponent implements OnInit {
         tempo: 0
       }
       time2.unsubscribe();
-      console.log("UserDataJogoDaMemoria",this.jogador);
     }
   });
    
@@ -71,11 +82,12 @@ export class JogoMemoriaComponent implements OnInit {
     }
 
     this.cartas = this.shuffle(this.cartas);
+
+    this.timerSegundos = this.tempoMaximo;
     
     this.mostrarIniciar();
     this.executarCronometro();
   
-   
   }
 
   public selecionarCarta(carta: Carta){
@@ -87,12 +99,10 @@ export class JogoMemoriaComponent implements OnInit {
           this.cartas[this.cartasSelecionadas[0]].isCorreto = true;
           this.cartas[this.cartasSelecionadas[1]].isCorreto = true;
           this.jogador.pontuacao+= Math.max(this.pontosPorAcerto,100);
-          console.log("pontos Ganhos",Math.max(this.pontosPorAcerto,100));
           this.resertarCartasSelecionadas();
           if (this.checarFimDeJogo()) {
             this.fimDeJogo = true;
-            this.jogador.tempo= this.timerSegundos
-            console.log(this.jogador)
+            this.jogador.tempo = this.tempoMaximo - this.timerSegundos;
 
             this.mostraResultado();
           }
@@ -137,14 +147,11 @@ export class JogoMemoriaComponent implements OnInit {
   private shuffle(array: any[]) {
     var currentIndex = array.length,  randomIndex;
   
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
   
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
   
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
@@ -160,37 +167,34 @@ export class JogoMemoriaComponent implements OnInit {
       }
 
       if (this.inicioJogo) {
-        this.timerSegundos++;
+        this.timerSegundos--;
         if (this.timerSegundos%( Math.ceil(30/this.dificuldade))==0) {
-          this.pontosPorAcerto -= Math.ceil(50*this.dificuldade)
-          console.log("pontos", this.pontosPorAcerto)
-          console.log("dificuldade", this.dificuldade)
+          this.pontosPorAcerto -= Math.ceil(50*this.dificuldade);
         }
       }
       
 
-      this.timerString = ""
-      this.timerString += Math.floor(this.timerSegundos /60);
-      this.timerString += ":" + (this.timerSegundos - Math.floor(this.timerSegundos /60)*60);
-      // if (this.timerSegundos == 60) {
-      //   this.timerSegundos = 0;
-      //   this.timerMinutos++;
-      // }
-      // this.timerString = "";
-      // if (this.timerMinutos < 10) {
-      //   this.timerString += "0" + this.timerMinutos;
-      // }else{
-      //   this.timerString += "" + this.timerMinutos;
-      // }
+      this.timerString = this.formatarTempo(this.timerSegundos);
 
-      // this.timerString += ":";
-
-      // if (this.timerSegundos < 10) {
-      //   this.timerString += "0" + this.timerSegundos;
-      // }else{
-      //   this.timerString += "" + this.timerSegundos;
-      // }
+      if(this.timerSegundos == 0){
+        this.fimDeJogo = true;
+        this.jogador.tempo= this.timerSegundos;
+        this.mostraResultado();
+      }
     });
+  }
+
+  private formatarTempo(tempo: number){
+    let tempoFormatado = "";
+    let minutos = Math.floor(tempo /60);
+    let segundos = (tempo - Math.floor(tempo /60)*60);
+    if(minutos < 10) tempoFormatado += "0"+minutos;
+    else tempoFormatado += minutos;
+    tempoFormatado += ":";
+    if(segundos < 10) tempoFormatado += "0"+segundos;
+    else  tempoFormatado += segundos;
+
+    return tempoFormatado;
   }
   
   private mostraResultado() {
@@ -199,16 +203,17 @@ export class JogoMemoriaComponent implements OnInit {
       width: '70%',
       closable: false,
       data: {
-        tempo: this.timerString
+        tempo: this.formatarTempo(this.tempoMaximo - this.timerSegundos)
       },
     });
+    this.refJanela = ref;
   }
   private mostrarIniciar() {
     const ref = this.dialogService.open(IniciarJogoMemoriaComponent, {
       header: '',
-      width: '70%',
-      closable: false
+      closable: true
     });
+    this.refJanela = ref;
 
     ref.onClose.subscribe(() =>{
       this.inicioJogo = true;

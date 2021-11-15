@@ -1,1 +1,68 @@
-<p>configurar-jogo-memoria works!</p>
+<div class="p-grid" *ngIf="!viewJogo">
+    <div class="p-col-12">
+        <h1 style="text-align: center;">
+            {{titleText}}
+        </h1>
+    </div>
+    <div class="p-col-12">
+        <span class="p-float-label">
+            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText> 
+            <label for="float-input">Título do Jogo</label>
+        </span>
+    </div>
+    <div class="p-col-8 p-d-flex p-ai-center p-jc-center">
+        <i>
+            Selecione o tempo máximo para o jogo(Em segundos):
+        </i>
+    </div>
+    <div class="p-col-4">
+        <div class="p-d-flex p-jc-center">
+            <p-knob [(ngModel)]="tempo" [size]="200" [min]="20" [max]="600" [step]="10" valueTemplate="{value}s"></p-knob>
+        </div>
+    </div>    
+    <div class="p-col-12">
+        <button pButton type="button" class="p-button-info" (click)="ativar()" [label]="buttonText" [style]="{'width': '100%'}"></button>
+    </div>
+</div>
+<div class="p-grid p-formgrid" *ngIf="viewJogo">
+    <div class="p-field p-col-12 p-md-6" style="margin: auto;" *ngIf="loading">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p-skeleton height="2.5rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+            <div class="p-col-12">
+                <p-skeleton styleClass="p-mb-2" ></p-skeleton>
+            </div>
+            <div class="p-col-8">
+                <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+            <div class="p-col-4">
+                <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+        </div>
+    </div>
+    <div class="p-grid p-col-12" *ngIf="!loading">
+        <div class="p-col-12">
+            <h1 style="text-align: center;">
+                {{titulo}} foi criado com sucesso!
+            </h1>
+        </div>
+        <div class="p-col-12">
+            <h3 style="text-align: center;">
+                Agora você pode enviar o jogo para as pessoas que vão resolver utilizando o link abaixo!
+            </h3>
+        </div>
+        <div class="p-col-8">
+            <a href="/jogo-memoria?id={{idJogo}}">
+                <div class="p-card" style="text-align: center; width: 100%;">
+                    <h3 class="link">
+                        {{baseURL}}/jogo-memoria?id={{idJogo}}
+                    </h3>
+                </div>
+            </a>
+        </div>
+        <div class="p-col-4">
+            <button pButton type="button" class="p-button-info" (click)="copiarLink()" label="Copiar" [style]="{'width': '100%', 'height': '100%'}"></button>
+        </div>
+    </div>
+</div>

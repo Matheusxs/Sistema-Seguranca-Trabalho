@@ -21,6 +21,8 @@ import {TabViewModule} from 'primeng/tabview';
 import {DividerModule} from 'primeng/divider';
 import {SplitterModule} from 'primeng/splitter';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {KnobModule} from 'primeng/knob';
+import {SkeletonModule} from 'primeng/skeleton';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
@@ -86,12 +88,15 @@ const routes: Routes = [
     DividerModule,
     SplitterModule,
     DynamicDialogModule,
+    KnobModule,
+    SkeletonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
     FimJogoMemoriaComponent,
-    IniciarJogoMemoriaComponent
+    IniciarJogoMemoriaComponent,
+    ConfigurarJogoMemoriaComponent
 ]
 })
 export class AppModule { }
