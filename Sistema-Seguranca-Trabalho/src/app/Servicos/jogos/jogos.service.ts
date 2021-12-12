@@ -24,7 +24,11 @@ export class JogosService {
     return new Observable(observer =>{
       this.afs.collection('Jogos').add({
         title: jogo.getTitulo(),
-        tempo: jogo.getTempo(),
+        tempo_inicio: jogo.getTempoInicio(),
+        tempo_max: jogo.getTempoMax(),
+        quantidade_tentativas: jogo.getQuantidadeTentativas(),
+        prioridade_tempo: jogo.getPrioridadeTempo(),
+        mostrar_cartas_antes: jogo.getMostrarCartasAntes(),
         jogadores: jogo.getJogadores(),
       }).then(function(docRef: any) {
         console.log("Document written with ID: ", docRef.id);

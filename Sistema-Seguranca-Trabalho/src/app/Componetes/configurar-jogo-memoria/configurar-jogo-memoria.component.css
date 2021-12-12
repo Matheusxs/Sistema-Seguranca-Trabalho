@@ -8,3 +8,11 @@ a{
     height: 3rem;
     line-height: 3rem;
 }
+
+.linhaSlider{
+    height: 100px;
+}
+
+:host>>> .p-progressbar .p-progressbar-label{
+    color: rgb(37, 37, 37);
+}

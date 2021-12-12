@@ -23,6 +23,10 @@ import {SplitterModule} from 'primeng/splitter';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {KnobModule} from 'primeng/knob';
 import {SkeletonModule} from 'primeng/skeleton';
+import {SliderModule} from 'primeng/slider';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {ToastModule} from 'primeng/toast';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
@@ -90,6 +94,10 @@ const routes: Routes = [
     DynamicDialogModule,
     KnobModule,
     SkeletonModule,
+    SliderModule,
+    InputSwitchModule,
+    ProgressBarModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

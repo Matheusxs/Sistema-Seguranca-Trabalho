@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="p-grid" *ngIf="!viewJogo">
     <div class="p-col-12">
         <h1 style="text-align: center;">
@@ -6,20 +7,97 @@
     </div>
     <div class="p-col-12">
         <span class="p-float-label">
-            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText> 
+            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText *ngIf="!tituloInvalido" (input)="mudarTitulo()"> 
+            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText class="ng-invalid ng-dirty" *ngIf="tituloInvalido" (input)="mudarTitulo()"> 
             <label for="float-input">Título do Jogo</label>
         </span>
     </div>
-    <div class="p-col-8 p-d-flex p-ai-center p-jc-center">
-        <i>
-            Selecione o tempo máximo para o jogo(Em segundos):
-        </i>
-    </div>
-    <div class="p-col-4">
-        <div class="p-d-flex p-jc-center">
-            <p-knob [(ngModel)]="tempo" [size]="200" [min]="20" [max]="600" [step]="10" valueTemplate="{value}s"></p-knob>
+    <div class="p-col-12">
+        <div class="p-grid">
+            <!-- Opções de Quantidade de questões -->
+            <div class="p-col-6">
+                <div>
+                    <i>
+                        Selecione o quantas tentativas o jogador terá antes de começar a perder pontos
+                    </i>
+                </div>
+                <br>
+                <div class="p-col-12 linhaSlider">
+                    <div class="p-grid">
+                        <div class="p-col-12">
+                            <p-slider [(ngModel)]="quantidade_tentativas" [min]="1" [max]="20" (onChange)="mudarQuantidadeTentativas()"></p-slider>
+                        </div>
+                        <div class="p-col-12">
+                            <strong>
+                                Quantidade de tentativas: {{quantidade_tentativas}}
+                            </strong>
+                        </div>
+                    </div>
+                </div> 
+                <div>
+                    <i>
+                        Selecione a prioridade para calculo do resultado em porcentagem entre quantidade de tentativas e tempo
+                    </i>
+                </div>
+                <br>
+                <div class="p-col-12 linhaSlider">
+                    <div class="p-grid">
+                        <div class="p-col-12">
+                            <p-slider [(ngModel)]="prioridade_tempo" [min]="0" [max]="100" [step]="10"></p-slider>
+                        </div>
+                        <div class="p-col-6">
+                            <strong>
+                                Tentativas({{100-prioridade_tempo}}%)
+                            </strong>
+                        </div>
+                        <div class="p-col-6">
+                            <strong style="float: right;">
+                                Tempo({{prioridade_tempo}}%)
+                            </strong>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <!-- Opções de tempo -->
+            <div class="p-col-6">
+                <div>
+                    <i>
+                        Selecione o tempo que o jogador terá antes de começar a perder pontos(Em segundos)
+                    </i>
+                </div>
+                <div class="p-col-12">
+                    <div class="p-d-flex p-jc-center">
+                        <p-knob [(ngModel)]="tempo_inicio" [size]="100" [min]="0" [max]="tempo_max" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoInicio()"></p-knob>
+                    </div>
+                </div>    
+                <div>
+                    <i>
+                        Selecione o tempo máximo para o jogo(Em segundos)
+                    </i>
+                </div>
+                <div class="p-col-12">
+                    <div class="p-d-flex p-jc-center">
+                        <p-knob [(ngModel)]="tempo_max" [size]="100" [min]="20" [max]="600" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoMax()"></p-knob>
+                    </div>
+                </div>    
+            </div>
         </div>
-    </div>    
+    </div>
+    <div class="p-col-6">
+        Mostrar as cartas rápidamente antes de iniciar?
+    </div>
+    <div class="p-col-6">
+        <div class="p-d-flex p-jc-center">
+            <p-inputSwitch [(ngModel)]="mostrar_cartas_antes" (onChange)="mudarMostrarCartasAntes()"></p-inputSwitch>
+        </div>
+    </div>
+    <br>
+    <div class="p-col-12">
+        Dificuldade
+    </div>
+    <div class="p-col-12">
+        <p-progressBar [value]="dificuldade"></p-progressBar>
+    </div>
     <div class="p-col-12">
         <button pButton type="button" class="p-button-info" (click)="ativar()" [label]="buttonText" [style]="{'width': '100%'}"></button>
     </div>

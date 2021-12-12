@@ -1,32 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { AuthService } from 'src/app/Servicos/auth/auth.service';
+import { ConfigurarJogoMemoriaComponent } from '../configurar-jogo-memoria/configurar-jogo-memoria.component';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
+  providers: [DialogService]
 })
 
 export class MenuComponent implements OnInit {
   items: MenuItem[] = [];
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(
+    public authService: AuthService, private router: Router,
+    public dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.items = [
-      {
-          label: 'Área do aluno',
-          icon: 'pi pi-user'
-      },
-      {
-          label: 'Informações',
-          icon: 'pi pi-book'
-      },
-      {
-        label: 'Turma',
-        icon: 'pi pi-users'
-      },
       {
         label: 'Jogo Memoria',
         icon: 'pi pi-users',
@@ -35,12 +28,20 @@ export class MenuComponent implements OnInit {
         }
       },
       {
-        label: 'Atividade',
-        icon: 'pi pi-users',
+        label: 'Criar jogo',
+        icon: 'pi pi-plus-circle',
         command: (event) => {
-          this.router.navigate(['atividade']);
+          this.mostraResultado();
         }
       },
     ];
+  }
+
+  private mostraResultado() {
+    const ref = this.dialogService.open(ConfigurarJogoMemoriaComponent, {
+      header: '',
+      width: '70%',
+      closable: true,
+    });
   }
 }

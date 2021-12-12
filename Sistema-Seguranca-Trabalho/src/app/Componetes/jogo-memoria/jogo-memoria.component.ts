@@ -52,10 +52,10 @@ export class JogoMemoriaComponent implements OnInit {
           console.log(jogo);
         }else{
           console.error("Jogo não encontrado");
-          this.router.navigate(['/']);
-          if(this.refJanela){
-            this.refJanela.close();
-          }
+          // this.router.navigate(['/']);
+          // if(this.refJanela){
+          //   this.refJanela.close();
+          // }
         }
       })
     }
