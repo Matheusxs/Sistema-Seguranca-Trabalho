@@ -9,6 +9,14 @@ a{
     line-height: 3rem;
 }
 
+.link2{
+    color: #4FC3F7;
+    text-decoration: none;
+    font-size: small;
+    height: 3rem;
+    line-height: 3rem;
+}
+
 .linhaSlider{
     height: 100px;
 }

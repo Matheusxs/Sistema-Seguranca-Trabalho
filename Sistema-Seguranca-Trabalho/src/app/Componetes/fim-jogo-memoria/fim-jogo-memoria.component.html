@@ -6,13 +6,27 @@
     </div>
     <div class="p-col-12">
         <h2 style="text-align: center;">
-            Você Conseguiu Resolve em:
+            Aqui estão as informações sobre o seu desempenho:
         </h2>    
     </div>
     <div class="p-col-12">
         <h2 style="text-align: center;">
             <b>
-                {{tempo}}
+                Você concluiu em: <span class="destaque">{{formatarTempo(jogador.getTempo())}}</span> minutos.
+            </b>
+        </h2>    
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            <b>
+                Você utilizou <span class="destaque">{{jogador.getTentativas()}}</span> tentativas.
+            </b>
+        </h2>    
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            <b>
+                Sua pontuação foi de <span class="destaque">{{getPontuacao()}}/10</span>.
             </b>
         </h2>    
     </div>

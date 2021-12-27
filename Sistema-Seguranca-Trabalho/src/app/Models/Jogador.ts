@@ -1,32 +1,42 @@
 export class Jogador{
+    private id: string = '';
     private nome: string = '';
-    private pontuacao: number = 0;
+    private tentativas: number = 0;
     private tempo: number = 0;
 
-    public constructor(nome: string, pontuacao: number, tempo: number){
+    public constructor(id: string, nome: string, tentativas: number, tempo: number){
+        this.id = id;
         this.nome = nome;
-        this.pontuacao = pontuacao;
+        this.tentativas = tentativas;
         this.tempo = tempo;
+    }
+
+    public getId(): string{
+        return this.id;
     }
 
     public getNome(): string{
         return this.nome;
     }
 
-    public getPontuacao(): number{
-        return this.pontuacao;
+    public getTentativas(): number{
+        return this.tentativas;
     }
 
     public getTempo(): number{
         return this.tempo;
     }
 
+    public setId(id: string): void{
+        this.id = id;
+    }
+
     public setNome(nome: string): void{
         this.nome = nome;
     }
 
-    public setPontuacao(pontuacao: number): void{
-        this.pontuacao = pontuacao;
+    public setTentativas(tentativas: number): void{
+        this.tentativas = tentativas;
     }
 
     public setTempo(tempo: number): void{
@@ -34,6 +44,6 @@ export class Jogador{
     }
 
     public toString(): string{
-        return "Nome: " + this.nome + " Pontuação: " + this.pontuacao + " Tempo: " + this.tempo;
+        return "Nome: " + this.nome + " Tentativas: " + this.tentativas + " Tempo: " + this.tempo;
     }
 }

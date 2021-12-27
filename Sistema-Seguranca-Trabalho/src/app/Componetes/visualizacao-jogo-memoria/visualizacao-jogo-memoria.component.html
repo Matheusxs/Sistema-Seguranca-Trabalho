@@ -1,0 +1,21 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <h1 style="text-align: center;">
+            Lista de jogadores({{jogo.getTitulo()}})
+        </h1>
+    </div>
+    <div class="p-col-12" *ngFor="let jogador of jogadores; let i = index">
+        <div class="p-grid">
+            <div class="p-col-8">
+                {{jogador.nome}}
+            </div>
+            <div class="p-col-4">
+                {{jogo.getPontuacao(jogador.tempo, jogador.tentativas)}}/10
+            </div>
+        </div>
+    </div>
+    
+    <div class="p-col-12">
+        <button pButton type="button" (click)="iniciar()" [style]="{'width': '100%'}" label="Fechar" ></button>
+    </div>
+</div>

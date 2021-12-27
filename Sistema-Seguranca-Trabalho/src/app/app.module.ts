@@ -44,6 +44,7 @@ import { JogoMemoriaComponent } from './Componetes/jogo-memoria/jogo-memoria.com
 import { FimJogoMemoriaComponent } from './Componetes/fim-jogo-memoria/fim-jogo-memoria.component';
 import { IniciarJogoMemoriaComponent } from './Componetes/iniciar-jogo-memoria/iniciar-jogo-memoria.component';
 import { ConfigurarJogoMemoriaComponent } from './Componetes/configurar-jogo-memoria/configurar-jogo-memoria.component';
+import { VisualizacaoJogoMemoriaComponent } from './Componetes/visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,7 @@ const routes: Routes = [
     FimJogoMemoriaComponent,
     IniciarJogoMemoriaComponent,
     ConfigurarJogoMemoriaComponent,
+    VisualizacaoJogoMemoriaComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,14 +99,15 @@ const routes: Routes = [
     SliderModule,
     InputSwitchModule,
     ProgressBarModule,
-    ToastModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
     FimJogoMemoriaComponent,
     IniciarJogoMemoriaComponent,
-    ConfigurarJogoMemoriaComponent
+    ConfigurarJogoMemoriaComponent,
+    VisualizacaoJogoMemoriaComponent,
 ]
 })
 export class AppModule { }

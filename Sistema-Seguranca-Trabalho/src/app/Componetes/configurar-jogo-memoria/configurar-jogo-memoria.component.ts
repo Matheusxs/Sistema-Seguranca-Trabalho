@@ -18,7 +18,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
 
   tempo_inicio = 240;
   tempo_max = 310;
-  quantidade_tentativas = 10;
+  quantidade_tentativas = 24;
   prioridade_tempo = 50;
   mostrar_cartas_antes = false;
 
@@ -33,6 +33,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
   viewJogo = false;
   loading = false;
   idJogo = '';
+  id_visualizar = '';
   baseURL = window.location.origin;
 
   constructor(
@@ -60,7 +61,8 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
     if(this.verificarCamposObrigatorios()){
       this.viewJogo = true;
       this.loading = true;
-      this.jogosService.criarJogo(new Jogo(this.titulo, this.tempo_inicio, this.tempo_max, this.quantidade_tentativas, this.prioridade_tempo, this.mostrar_cartas_antes)).subscribe((observer: any) => {
+      this.id_visualizar = this.jogosService.gerarUID();
+      this.jogosService.criarJogo(new Jogo(this.titulo, this.tempo_inicio, this.tempo_max, this.quantidade_tentativas, this.prioridade_tempo, this.mostrar_cartas_antes), this.id_visualizar).subscribe((observer: any) => {
         this.loading = false;
         this.idJogo = observer;
       });
@@ -96,6 +98,22 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
     document.body.removeChild(selBox);
   }
 
+  copiarLinkVisualizar(){
+    const val = this.baseURL + '/jogo-memoria?id=' + this.idJogo + '&list=' + this.id_visualizar;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+
   mudarTitulo(){
     this.titulo = this.titulo.replace(/\s+/g, ' ').trim();
     if(this.titulo == '' || this.titulo == ' '){
@@ -128,7 +146,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
 
     let dificuldade_tempo_max = (1 - ((this.tempo_max - 20)/580)) * this.peso_tempo_max;
     let dificuldade_tempo_inicio = (1 - (this.tempo_inicio/this.tempo_max)) * this.peso_tempo_inicio;
-    let dificuldade_quantidade_tentativas = (1 - ((this.quantidade_tentativas - 1)/19)) * this.peso_quantidade_tentativas;
+    let dificuldade_quantidade_tentativas = (1 - ((this.quantidade_tentativas - 1)/49)) * this.peso_quantidade_tentativas;
     let dificuldade_mostrar_cartas_antes;
 
     if(this.mostrar_cartas_antes){

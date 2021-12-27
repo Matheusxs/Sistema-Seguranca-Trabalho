@@ -1,8 +1,42 @@
 <div class="p-grid">
     <div class="p-col-12">
         <h1 style="text-align: center;">
-            Clique no Botão Abaixo Para Iniciar o Jogo
+            {{jogo.getTitulo()}}
         </h1>
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            Você poderá usar <span class="destaque">{{jogo.getQuantidadeTentativas()}}</span> tentativas antes de começar a perder pontos.
+        </h2>
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            Você terá <span class="destaque">{{formatarTempo(jogo.getTempoMax())}}</span> minutos para finalizar o jogo.
+        </h2>
+        <h2 style="text-align: center;">
+            Você começara a perder pontos a partir de <span class="destaque">{{formatarTempo(jogo.getTempoMax() - jogo.getTempoInicio())}}</span> minutos no cronômetro.
+        </h2>
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            O peso da pontuação será de <span class="destaque">{{jogo.getPrioridadeTempo()}}%</span> para tempo.
+        </h2>
+        <h2 style="text-align: center;">
+            E o peso da pontuação será de <span class="destaque">{{100 - jogo.getPrioridadeTempo()}}%</span> para quantidade de tentativas.
+        </h2>
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;" *ngIf="jogo.getMostrarCartasAntes()">
+            As cartas <span class="destaque">irão</span> iniciar viradas para cima.
+        </h2>
+        <h2 style="text-align: center;" *ngIf="!jogo.getMostrarCartasAntes()">
+            As cartas <span class="destaque">não irão</span> iniciar viradas para cima.
+        </h2>
+    </div>
+    <div class="p-col-12">
+        <h2 style="text-align: center;">
+            <span class="destaque">Clique no Botão Abaixo Para Iniciar o Jogo</span>
+        </h2>
     </div>
     <div class="p-col-12">
         <button pButton type="button" (click)="iniciar()" [style]="{'width': '100%'}" label="Iniciar" ></button>

@@ -86,4 +86,27 @@ export class Jogo{
     public getJogador(index: number){
         return this.jogadores[index];
     }
+
+    public getPontuacao(tempo: number, tentativas: number): number{
+        let pontuacao = 10;
+        if(tempo > this.tempo_inicio){
+            const tempo_ultrapassado = tempo - this.tempo_inicio;
+            const tempo_ultrapassado_porcentagem = tempo_ultrapassado / (this.tempo_max - this.tempo_inicio);
+            const prioridade_tempo_porcentagem = this.prioridade_tempo / 100;
+            pontuacao = pontuacao - (tempo_ultrapassado_porcentagem * 10) * prioridade_tempo_porcentagem;
+        }
+        if(tentativas > this.quantidade_tentativas){
+            const tentativas_excedidas = tentativas - this.quantidade_tentativas;
+            const tentativas_excedidas_porcentagem = tentativas_excedidas / this.quantidade_tentativas;
+            const prioridade_tentativas_porcentagem = (100 - this.prioridade_tempo) / 100;
+            pontuacao = pontuacao - (tentativas_excedidas_porcentagem * 10) * prioridade_tentativas_porcentagem;
+        }
+        return Math.round(pontuacao);
+
+    }
+
+    public toString(): string{
+        return "Jogo: " + this.titulo + " | Tempo Inicio: " + this.tempo_inicio + " | Tempo Max: " + this.tempo_max + " | Quantidade Tentativas: " + this.quantidade_tentativas + " | Prioridade Tempo: " + this.prioridade_tempo + " | Mostrar Cartas Antes: " + this.mostrar_cartas_antes;
+    }
+
 }
