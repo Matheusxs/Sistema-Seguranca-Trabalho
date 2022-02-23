@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
 import { Jogo } from 'src/app/Models/Jogo';
 import { VisualizacaoJogoMemoriaComponent } from '../visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
+import { CartaService } from 'src/app/Servicos/carta/carta.service';
 
 
 @Component({
@@ -19,10 +20,17 @@ import { VisualizacaoJogoMemoriaComponent } from '../visualizacao-jogo-memoria/v
 })
 export class JogoMemoriaComponent implements OnInit {
 
-  constructor(public dialogService: DialogService, public authService: AuthService, private router: Router, private arouter: ActivatedRoute, private jogoService: JogosService) { 
-  }
+  constructor(
+    public dialogService: DialogService,
+    public authService: AuthService,
+    private router: Router,
+    private arouter: ActivatedRoute,
+    private jogoService: JogosService,
+    private cartasService: CartaService
+  ){ }
 
   debug_mode: boolean = false;
+  visualizando: boolean = false;
 
   jogo_id: string = "";
 
@@ -60,9 +68,20 @@ export class JogoMemoriaComponent implements OnInit {
         if(jogo){
           this.tempoMaximo = jogo.tempo_max;
           this.timerSegundos = this.tempoMaximo;
-          this.jogo = new Jogo(jogo.title, jogo.tempo_inicio, jogo.tempo_max, jogo.quantidade_tentativas, jogo.prioridade_tempo, jogo.mostrar_cartas_antes);
+          this.jogo = new Jogo(
+            jogo.title,
+            jogo.tempo_inicio,
+            jogo.tempo_max,
+            jogo.quantidade_tentativas,
+            jogo.prioridade_tempo,
+            jogo.mostrar_cartas_antes,
+            jogo.cartas_seleciodadas,
+            jogo.quantidade_cartas
+          );
           this.jogo.setJogadores(jogo.jogadores);
+          this.inicializarCartas();
           if(id_visualizar == jogo.id_visualizar){
+            this.visualizando = true;
             this.mostrarVisualizacao();
           }else{
             this.mostrarIniciar();
@@ -92,7 +111,7 @@ export class JogoMemoriaComponent implements OnInit {
         tempo: 0
       }
       this.jogoService.jogadorExiste(this.jogo_id, this.jogador.id).subscribe((existe: any) =>{
-        if(existe){
+        if(existe && !this.visualizando){
           if(this.refJanela){
             this.refJanela.close();
           }
@@ -103,15 +122,53 @@ export class JogoMemoriaComponent implements OnInit {
       time2.unsubscribe();
     }
   });
-   
-    for (let index = 0; index < 16; index++) {
-      this.cartas.push(new Carta(this.cartas));
+
+    this.timerSegundos = this.tempoMaximo;
+  }
+
+  private inicializarCartas(){
+    console.log(this.jogo.getCartasSelecionada());
+    if(this.jogo.getCartasSelecionada().length != 0){
+      for(let i = 0; i < this.jogo.getCartasSelecionada().length; i++){
+        this.cartas = this.cartas.concat(this.cartasService.getCartaPair(this.jogo.getCartasSelecionada()[i]));
+      }
+      if(this.cartas.length != this.jogo.getQuantidadeCartas()){
+        const quantidade_restante = this.jogo.getQuantidadeCartas() - this.cartas.length;
+        for (let index = 0; index < quantidade_restante/2; index++) {
+          do{
+            let cartas = this.cartasService.getRandomCartaPair();
+            let valido = true;
+            this.cartas.forEach((carta) => {
+              if(carta.id == cartas[0].id){
+                valido = false;
+              }
+            });
+            if(valido){
+              this.cartas = this.cartas.concat(cartas);
+              break;
+            }
+          }while(true);
+        }
+      }
+    }else{
+      for (let index = 0; index < this.jogo.getQuantidadeCartas()/2; index++) {
+        do{
+          let cartas = this.cartasService.getRandomCartaPair();
+          let valido = true;
+          this.cartas.forEach((carta) => {
+            if(carta.id == cartas[0].id){
+              valido = false;
+            }
+          });
+          if(valido){
+            this.cartas = this.cartas.concat(cartas);
+            break;
+          }
+        }while(true);
+      }
     }
 
     this.cartas = this.shuffle(this.cartas);
-
-    this.timerSegundos = this.tempoMaximo;
-  
   }
 
   private mostrarCartas(tempo: number){
@@ -225,7 +282,7 @@ export class JogoMemoriaComponent implements OnInit {
 
       if(this.timerSegundos == 0){
         this.fimDeJogo = true;
-        this.jogador.tempo = this.timerSegundos;
+        this.jogador.tempo = this.tempoMaximo;
         this.mostraResultado();
       }
     });
@@ -305,10 +362,15 @@ export class JogoMemoriaComponent implements OnInit {
   private mostrarVisualizacao(){
     const ref = this.dialogService.open(VisualizacaoJogoMemoriaComponent, {
       header: '',
+      width: '50%',
       data: {
         jogo: this.jogo
       }
     });
     this.refJanela = ref;
+
+    ref.onClose.subscribe(() =>{
+      this.router.navigate(['']);
+    });
   }
 }

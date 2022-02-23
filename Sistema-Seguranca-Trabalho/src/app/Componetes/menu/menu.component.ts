@@ -4,6 +4,7 @@ import {MenuItem} from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AuthService } from 'src/app/Servicos/auth/auth.service';
 import { ConfigurarJogoMemoriaComponent } from '../configurar-jogo-memoria/configurar-jogo-memoria.component';
+import { VisualizacaoJogoMemoriaComponent } from '../visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
 
 @Component({
   selector: 'app-menu',
@@ -21,17 +22,17 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Jogo Memoria',
-        icon: 'pi pi-users',
-        command: (event) => {
-          this.router.navigate(['jogo-memoria']);
-        }
-      },
-      {
         label: 'Criar jogo',
         icon: 'pi pi-plus-circle',
         command: (event) => {
           this.mostraResultado();
+        }
+      },
+      {
+        label: 'Visualizar meus jogos',
+        icon: 'pi pi-users',
+        command: (event) => {
+          this.mostraJogos();
         }
       },
     ];
@@ -41,6 +42,14 @@ export class MenuComponent implements OnInit {
     const ref = this.dialogService.open(ConfigurarJogoMemoriaComponent, {
       header: '',
       width: '70%',
+      closable: true,
+    });
+  }
+
+  private mostraJogos() {
+    const ref = this.dialogService.open(VisualizacaoJogoMemoriaComponent, {
+      header: '',
+      width: '50%',
       closable: true,
     });
   }

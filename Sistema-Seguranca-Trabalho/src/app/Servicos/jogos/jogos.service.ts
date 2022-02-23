@@ -11,12 +11,42 @@ export class JogosService {
 
   constructor(public afs: AngularFirestore) {
 
-   }
+  }
   public getJogo(id:string){
     return new Observable(observer =>{
       const jogoRef: AngularFirestoreDocument<any> = this.afs.doc(`Jogos/${id}`);
       jogoRef.get().subscribe(valor =>{
         observer.next(valor.data());
+      });
+    });
+  }
+
+  public getJogosDeUmUsuario(id: string){
+    return new Observable(observer =>{
+      const jogoRef = this.afs.collection('Jogos').get().subscribe(valor =>{
+        console.log("Query Snapshot: ", valor);
+        let jogos: any[] = [];
+        valor.forEach(function(doc) {
+          let jogo: any = doc.data();
+          let jogoO: Jogo = new Jogo(
+            jogo.title,
+            jogo.tempo_inicio,
+            jogo.tempo_max,
+            jogo.quantidade_tentativas,
+            jogo.prioridade_tempo,
+            jogo.mostrar_cartas_antes,
+            jogo.cartas_seleciodadas,
+            jogo.quantidade_cartas);
+          jogo.jogadores.forEach((jogador: any) =>{
+            if(jogador.id == id){
+              jogos.push({
+                jogo_nome: jogo.title,
+                pontuacao: jogoO.getPontuacao(jogador.tempo, jogador.tentativas)
+              });
+            }
+          });
+        });
+        observer.next(jogos);
       });
     });
   }
@@ -32,6 +62,8 @@ export class JogosService {
         prioridade_tempo: jogo.getPrioridadeTempo(),
         mostrar_cartas_antes: jogo.getMostrarCartasAntes(),
         jogadores: jogo.getJogadores(),
+        cartas_seleciodadas: jogo.getCartasSelecionada(),
+        quantidade_cartas: jogo.getQuantidadeCartas(),
       }).then(function(docRef: any) {
         console.log("Document written with ID: ", docRef.id);
         observer.next(docRef.id);

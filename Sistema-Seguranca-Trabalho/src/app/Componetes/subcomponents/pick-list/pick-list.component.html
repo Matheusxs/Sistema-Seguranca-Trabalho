@@ -1,0 +1,10 @@
+<div class="pickList">
+    <div class="info">Todas Cartas</div>
+    <div class="info">Cartas Selecionadas</div>
+    <div class="dragSide container">
+        <div class="item" *ngFor="let item of cartas" (click)="adicionarSelecionada(item)">{{item.conteudo}}</div>
+    </div>
+    <div class="dropSide container">
+        <div class="item" *ngFor="let item of cartasSelecionadas" (click)="removerSelecionada(item)">{{item.conteudo}}</div>
+    </div>
+</div>

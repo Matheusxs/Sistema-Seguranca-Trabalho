@@ -1,0 +1,50 @@
+.pickList{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 35rem;
+    min-height: 0;
+    flex-wrap: wrap;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    height: 80%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    font: 1.5rem 'Roboto', sans-serif;
+}
+
+.item{
+    min-height: 3rem;
+    max-height: 3rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 3rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.item:hover{
+    background-color: #81d4fa;
+    color: #000;
+    cursor: pointer;
+
+}
+
+.info{
+    width: 50%;
+    text-align: center;
+    font-size: 1.5rem;
+
+}

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { timer } from 'rxjs';
+import { Carta } from 'src/app/Models/Carta';
 import { Jogo } from 'src/app/Models/Jogo';
 import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
 
@@ -10,6 +12,8 @@ import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
   providers: [MessageService]
 })
 export class ConfigurarJogoMemoriaComponent implements OnInit {
+
+  @ViewChild('pick_list') pick_list: any;
 
   editMode = false;
   titleText = 'Criar Jogo da Memória';
@@ -27,6 +31,8 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
   peso_quantidade_tentativas = 3;
   peso_mostrar_cartas_antes = 1;
 
+  quantidade_cartas = 8;
+
   dificuldade = 0;
 
   tituloInvalido = false;
@@ -35,6 +41,9 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
   idJogo = '';
   id_visualizar = '';
   baseURL = window.location.origin;
+
+  placehooders: any[] = [];
+  timerPlaceholders: any;
 
   constructor(
     private jogosService: JogosService,
@@ -47,6 +56,10 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
       this.buttonText = 'Editar';
     }
     this.calcularDificuldade();
+
+    this.timerPlaceholders = timer(500, 1500).subscribe(() => {
+      this.placehooders = Array(this.quantidade_cartas).fill(0);
+    });
   }
 
   ativar(){
@@ -58,11 +71,24 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
   }
 
   criar(){
+    console.log("pick_list", this.getCartasSelecionadas(this.pick_list.cartasSelecionadas));
     if(this.verificarCamposObrigatorios()){
       this.viewJogo = true;
       this.loading = true;
       this.id_visualizar = this.jogosService.gerarUID();
-      this.jogosService.criarJogo(new Jogo(this.titulo, this.tempo_inicio, this.tempo_max, this.quantidade_tentativas, this.prioridade_tempo, this.mostrar_cartas_antes), this.id_visualizar).subscribe((observer: any) => {
+      this.jogosService.criarJogo(
+        new Jogo(
+          this.titulo,
+          this.tempo_inicio,
+          this.tempo_max,
+          this.quantidade_tentativas,
+          this.prioridade_tempo,
+          this.mostrar_cartas_antes,
+          this.getCartasSelecionadas(this.pick_list.cartasSelecionadas),
+          this.quantidade_cartas
+          ),
+        this.id_visualizar
+      ).subscribe((observer: any) => {
         this.loading = false;
         this.idJogo = observer;
       });
@@ -73,6 +99,14 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
   }
 
   editar(){
+  }
+
+  getCartasSelecionadas(cartas: Carta[]){
+    return cartas.map(carta => carta.conteudo);
+  }
+
+  selecionarCartas(pick_list: any){
+    console.log(pick_list.cartasSelecionadas)
   }
 
   verificarCamposObrigatorios(){

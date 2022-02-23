@@ -9,7 +9,7 @@ import { Jogo } from 'src/app/Models/Jogo';
 })
 export class IniciarJogoMemoriaComponent implements OnInit {
 
-  jogo: Jogo = new Jogo("", 0, 0, 0, 0, false);
+  jogo: Jogo = new Jogo("", 0, 0, 0, 0, false, [], 0);
 
   constructor(
     public ref: DynamicDialogRef, 

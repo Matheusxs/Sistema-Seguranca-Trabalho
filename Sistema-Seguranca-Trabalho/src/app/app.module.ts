@@ -45,6 +45,7 @@ import { FimJogoMemoriaComponent } from './Componetes/fim-jogo-memoria/fim-jogo-
 import { IniciarJogoMemoriaComponent } from './Componetes/iniciar-jogo-memoria/iniciar-jogo-memoria.component';
 import { ConfigurarJogoMemoriaComponent } from './Componetes/configurar-jogo-memoria/configurar-jogo-memoria.component';
 import { VisualizacaoJogoMemoriaComponent } from './Componetes/visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
+import { PickListComponent } from './Componetes/subcomponents/pick-list/pick-list.component';
 
 
 const routes: Routes = [
@@ -75,6 +76,7 @@ const routes: Routes = [
     IniciarJogoMemoriaComponent,
     ConfigurarJogoMemoriaComponent,
     VisualizacaoJogoMemoriaComponent,
+    PickListComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +101,7 @@ const routes: Routes = [
     SliderModule,
     InputSwitchModule,
     ProgressBarModule,
-    ToastModule
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

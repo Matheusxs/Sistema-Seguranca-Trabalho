@@ -1,163 +1,196 @@
 <p-toast></p-toast>
-<div class="p-grid" *ngIf="!viewJogo">
+<div class="p-grid">
     <div class="p-col-12">
         <h1 style="text-align: center;">
             {{titleText}}
         </h1>
     </div>
-    <div class="p-col-12">
-        <span class="p-float-label">
-            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText *ngIf="!tituloInvalido" (input)="mudarTitulo()"> 
-            <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText class="ng-invalid ng-dirty" *ngIf="tituloInvalido" (input)="mudarTitulo()"> 
-            <label for="float-input">Título do Jogo</label>
-        </span>
-    </div>
-    <div class="p-col-12">
-        <div class="p-grid">
-            <!-- Opções de Quantidade de questões -->
-            <div class="p-col-6">
-                <div>
-                    <i>
-                        Selecione o quantas tentativas o jogador terá antes de começar a perder pontos
-                    </i>
-                </div>
-                <br>
-                <div class="p-col-12 linhaSlider">
-                    <div class="p-grid">
-                        <div class="p-col-12">
-                            <p-slider [(ngModel)]="quantidade_tentativas" [min]="1" [max]="50" (onChange)="mudarQuantidadeTentativas()"></p-slider>
-                        </div>
-                        <div class="p-col-12">
-                            <strong>
-                                Quantidade de tentativas: {{quantidade_tentativas}}
-                            </strong>
-                        </div>
-                    </div>
-                </div> 
-                <div>
-                    <i>
-                        Selecione a prioridade para calculo do resultado em porcentagem entre quantidade de tentativas e tempo
-                    </i>
-                </div>
-                <br>
-                <div class="p-col-12 linhaSlider">
-                    <div class="p-grid">
-                        <div class="p-col-12">
-                            <p-slider [(ngModel)]="prioridade_tempo" [min]="0" [max]="100" [step]="10"></p-slider>
-                        </div>
-                        <div class="p-col-6">
-                            <strong>
-                                Tentativas({{100-prioridade_tempo}}%)
-                            </strong>
-                        </div>
-                        <div class="p-col-6">
-                            <strong style="float: right;">
-                                Tempo({{prioridade_tempo}}%)
-                            </strong>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-            <!-- Opções de tempo -->
-            <div class="p-col-6">
-                <div>
-                    <i>
-                        Selecione o tempo que o jogador terá antes de começar a perder pontos(Em segundos)
-                    </i>
-                </div>
-                <div class="p-col-12">
-                    <div class="p-d-flex p-jc-center">
-                        <p-knob [(ngModel)]="tempo_inicio" [size]="100" [min]="0" [max]="tempo_max" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoInicio()"></p-knob>
-                    </div>
-                </div>    
-                <div>
-                    <i>
-                        Selecione o tempo máximo para o jogo(Em segundos)
-                    </i>
-                </div>
-                <div class="p-col-12">
-                    <div class="p-d-flex p-jc-center">
-                        <p-knob [(ngModel)]="tempo_max" [size]="100" [min]="20" [max]="600" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoMax()"></p-knob>
-                    </div>
-                </div>    
-            </div>
-        </div>
-    </div>
-    <div class="p-col-6">
-        Mostrar as cartas rápidamente antes de iniciar?
-    </div>
-    <div class="p-col-6">
-        <div class="p-d-flex p-jc-center">
-            <p-inputSwitch [(ngModel)]="mostrar_cartas_antes" (onChange)="mudarMostrarCartasAntes()"></p-inputSwitch>
-        </div>
-    </div>
-    <br>
-    <div class="p-col-12">
-        Dificuldade
-    </div>
-    <div class="p-col-12">
-        <p-progressBar [value]="dificuldade"></p-progressBar>
-    </div>
-    <div class="p-col-12">
-        <button pButton type="button" class="p-button-info" (click)="ativar()" [label]="buttonText" [style]="{'width': '100%'}"></button>
-    </div>
 </div>
-<div class="p-grid p-formgrid" *ngIf="viewJogo">
-    <div class="p-field p-col-12 p-md-6" style="margin: auto;" *ngIf="loading">
+<p-tabView>
+    <p-tabPanel header="Configurações">
+        <div class="p-grid" *ngIf="!viewJogo">
+            
+            <div class="p-col-12">
+                <span class="p-float-label">
+                    <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText *ngIf="!tituloInvalido" (input)="mudarTitulo()"> 
+                    <input [style]="{'width': '100%'}" id="float-input" type="text" [(ngModel)]="titulo" pInputText class="ng-invalid ng-dirty" *ngIf="tituloInvalido" (input)="mudarTitulo()"> 
+                    <label for="float-input">Título do Jogo</label>
+                </span>
+            </div>
+            <div class="p-col-12">
+                <div class="p-grid">
+                    <!-- Opções de Quantidade de questões -->
+                    <div class="p-col-6">
+                        <div>
+                            <i>
+                                Selecione o quantas tentativas o jogador terá antes de começar a perder pontos
+                            </i>
+                        </div>
+                        <br>
+                        <div class="p-col-12 linhaSlider">
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-slider [(ngModel)]="quantidade_tentativas" [min]="1" [max]="50" (onChange)="mudarQuantidadeTentativas()"></p-slider>
+                                </div>
+                                <div class="p-col-12">
+                                    <strong>
+                                        Quantidade de tentativas: {{quantidade_tentativas}}
+                                    </strong>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <i>
+                                Selecione a prioridade para calculo do resultado em porcentagem entre quantidade de tentativas e tempo
+                            </i>
+                        </div>
+                        <br>
+                        <div class="p-col-12 linhaSlider">
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-slider [(ngModel)]="prioridade_tempo" [min]="0" [max]="100" [step]="10"></p-slider>
+                                </div>
+                                <div class="p-col-6">
+                                    <strong>
+                                        Tentativas({{100-prioridade_tempo}}%)
+                                    </strong>
+                                </div>
+                                <div class="p-col-6">
+                                    <strong style="float: right;">
+                                        Tempo({{prioridade_tempo}}%)
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <!-- Opções de tempo -->
+                    <div class="p-col-6">
+                        <div>
+                            <i>
+                                Selecione o tempo que o jogador terá antes de começar a perder pontos(Em segundos)
+                            </i>
+                        </div>
+                        <div class="p-col-12">
+                            <div class="p-d-flex p-jc-center">
+                                <p-knob [(ngModel)]="tempo_inicio" [size]="100" [min]="0" [max]="tempo_max" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoInicio()"></p-knob>
+                            </div>
+                        </div>    
+                        <div>
+                            <i>
+                                Selecione o tempo máximo para o jogo(Em segundos)
+                            </i>
+                        </div>
+                        <div class="p-col-12">
+                            <div class="p-d-flex p-jc-center">
+                                <p-knob [(ngModel)]="tempo_max" [size]="100" [min]="20" [max]="600" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoMax()"></p-knob>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-6">
+                Mostrar as cartas rápidamente antes de iniciar?
+            </div>
+            <div class="p-col-6">
+                <div class="p-d-flex p-jc-center">
+                    <p-inputSwitch [(ngModel)]="mostrar_cartas_antes" (onChange)="mudarMostrarCartasAntes()"></p-inputSwitch>
+                </div>
+            </div>
+            <br>
+            <div class="p-col-12">
+                Dificuldade
+            </div>
+            <div class="p-col-12">
+                <p-progressBar [value]="dificuldade"></p-progressBar>
+            </div>
+            <div class="p-col-12">
+                <button pButton type="button" class="p-button-info" (click)="ativar()" [label]="buttonText" [style]="{'width': '100%'}"></button>
+            </div>
+        </div>
+        <div class="p-grid p-formgrid" *ngIf="viewJogo">
+            <div class="p-field p-col-12 p-md-6" style="margin: auto;" *ngIf="loading">
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <p-skeleton height="2.5rem" styleClass="p-mb-2"></p-skeleton>
+                    </div>
+                    <div class="p-col-12">
+                        <p-skeleton styleClass="p-mb-2" ></p-skeleton>
+                    </div>
+                    <div class="p-col-8">
+                        <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+                    </div>
+                    <div class="p-col-4">
+                        <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+                    </div>
+                </div>
+            </div>
+            <div class="p-grid p-col-12" *ngIf="!loading">
+                <div class="p-col-12">
+                    <h1 style="text-align: center;">
+                        {{titulo}} foi criado com sucesso!
+                    </h1>
+                </div>
+                <div class="p-col-12">
+                    <h3 style="text-align: center;">
+                        Agora você pode enviar o jogo para as pessoas que vão resolver utilizando o link abaixo!
+                    </h3>
+                </div>
+                <div class="p-col-8">
+                    <a href="/jogo-memoria?id={{idJogo}}">
+                        <div class="p-card" style="text-align: center; width: 100%;">
+                            <h3 class="link">
+                                {{baseURL}}/jogo-memoria?id={{idJogo}}
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="p-col-4">
+                    <button pButton type="button" class="p-button-info" (click)="copiarLink()" label="Copiar" [style]="{'width': '100%', 'height': '100%'}"></button>
+                </div>
+                <div class="p-col-12">
+                    <h3 style="text-align: center;">
+                        Guarde o link abaixo ele será utilizado para visualizar os resultados do seu jogo!
+                    </h3>
+                </div>
+                <div class="p-col-8">
+                    <a href="/jogo-memoria?id={{idJogo}}&list={{id_visualizar}}">
+                        <div class="p-card" style="text-align: center; width: 100%;">
+                            <h3 class="link2">
+                                {{baseURL}}/jogo-memoria?id={{idJogo}}&list={{id_visualizar}}
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="p-col-4">
+                    <button pButton type="button" class="p-button-info" (click)="copiarLinkVisualizar()" label="Copiar" [style]="{'width': '100%', 'height': '100%'}"></button>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Selecionar Cartas">
         <div class="p-grid">
-            <div class="p-col-12">
-                <p-skeleton height="2.5rem" styleClass="p-mb-2"></p-skeleton>
+            <div class="p-col-4"></div>
+            <div class="p-col-4" style="text-align: center;">
+                Quantidade de cartas: <span class="texto-primario">(total: {{quantidade_cartas}})</span> <span class="texto-selecionado">(selecionadas: {{pick_list.cartasSelecionadas.length*2}})</span> <span class="texto-excluido">(aleatórias: {{quantidade_cartas - (pick_list.cartasSelecionadas.length)*2}})</span>
             </div>
-            <div class="p-col-12">
-                <p-skeleton styleClass="p-mb-2" ></p-skeleton>
-            </div>
-            <div class="p-col-8">
-                <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
-            </div>
+            <div class="p-col-4"></div>
+            <div class="p-col-4"></div>
             <div class="p-col-4">
-                <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+                <strong>
+                    <p-slider [(ngModel)]="quantidade_cartas" [min]="8" [max]="16" [step]="2" (onChange)="mudarQuantidadeTentativas()"></p-slider>
+                </strong>
+            </div>
+            <div class="p-col-4"></div>
+            <div class="p-col-12">
+                <app-pick-list #pick_list [quantidadeTotal]="quantidade_cartas"></app-pick-list>
             </div>
         </div>
-    </div>
-    <div class="p-grid p-col-12" *ngIf="!loading">
-        <div class="p-col-12">
-            <h1 style="text-align: center;">
-                {{titulo}} foi criado com sucesso!
-            </h1>
+    </p-tabPanel>
+    <p-tabPanel header="Pre-visualizar">
+        <div class="cartas-container">
+            <div class="carta" *ngFor="let placehooder of placehooders; let i = index">
+                <div class="box box-stretched carta-virada"> </div>
+            </div>
         </div>
-        <div class="p-col-12">
-            <h3 style="text-align: center;">
-                Agora você pode enviar o jogo para as pessoas que vão resolver utilizando o link abaixo!
-            </h3>
-        </div>
-        <div class="p-col-8">
-            <a href="/jogo-memoria?id={{idJogo}}">
-                <div class="p-card" style="text-align: center; width: 100%;">
-                    <h3 class="link">
-                        {{baseURL}}/jogo-memoria?id={{idJogo}}
-                    </h3>
-                </div>
-            </a>
-        </div>
-        <div class="p-col-4">
-            <button pButton type="button" class="p-button-info" (click)="copiarLink()" label="Copiar" [style]="{'width': '100%', 'height': '100%'}"></button>
-        </div>
-        <div class="p-col-12">
-            <h3 style="text-align: center;">
-                Guarde o link abaixo ele será utilizado para visualizar os resultados do seu jogo!
-            </h3>
-        </div>
-        <div class="p-col-8">
-            <a href="/jogo-memoria?id={{idJogo}}&list={{id_visualizar}}">
-                <div class="p-card" style="text-align: center; width: 100%;">
-                    <h3 class="link2">
-                        {{baseURL}}/jogo-memoria?id={{idJogo}}&list={{id_visualizar}}
-                    </h3>
-                </div>
-            </a>
-        </div>
-        <div class="p-col-4">
-            <button pButton type="button" class="p-button-info" (click)="copiarLinkVisualizar()" label="Copiar" [style]="{'width': '100%', 'height': '100%'}"></button>
-        </div>
-    </div>
-</div>
+    </p-tabPanel>
+</p-tabView>

@@ -24,3 +24,59 @@ a{
 :host>>> .p-progressbar .p-progressbar-label{
     color: rgb(37, 37, 37);
 }
+
+.texto-primario{
+    color: #81D4FA;
+}
+
+.texto-selecionado{
+    color: #AED581;
+}
+
+.texto-excluido{
+    color: #E57373;
+}
+
+.cartas-container{
+    margin: auto;
+    width: 40rem;
+    height: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.carta{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 1rem;
+}
+
+/* --- */
+.box {
+    background-color: var(--surface-e);
+    text-align: center;
+    padding: 65px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    width: 200px;
+    height: 200px;
+    margin: auto;
+
+}
+
+.carta-virada{
+    background-color: rgb(17, 54, 95);
+    color: white;
+    font-weight: bolder;
+}
+.box-stretched {
+    height: 100%;
+}

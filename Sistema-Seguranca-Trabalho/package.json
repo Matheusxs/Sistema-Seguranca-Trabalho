@@ -7,12 +7,15 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "login": "firebase login",
+    "init": "firebase init",
+    "deploy": "firebase deploy"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.0.5",
-    "@angular/cdk": "^13.1.1",
+    "@angular/cdk": "^13.2.2",
     "@angular/common": "~11.0.5",
     "@angular/compiler": "~11.0.5",
     "@angular/core": "~11.0.5",
@@ -23,6 +26,7 @@
     "@angular/router": "~11.0.5",
     "angularfire": "^2.3.0",
     "firebase": "^8.2.1",
+    "firebase-tools": "^10.2.1",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "=11.4.2",
