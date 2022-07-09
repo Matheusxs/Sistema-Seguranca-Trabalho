@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 import { Carta } from 'src/app/Models/Carta';
 import { Jogo } from 'src/app/Models/Jogo';
+import { AuthService } from 'src/app/Servicos/auth/auth.service';
 import { JogosService } from 'src/app/Servicos/jogos/jogos.service';
 
 @Component({
@@ -47,6 +48,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
 
   constructor(
     private jogosService: JogosService,
+    private authService: AuthService,
     private messageService: MessageService
   ) { }
 
@@ -78,6 +80,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
       this.id_visualizar = this.jogosService.gerarUID();
       this.jogosService.criarJogo(
         new Jogo(
+          this.authService.userData.uid,
           this.titulo,
           this.tempo_inicio,
           this.tempo_max,
@@ -91,6 +94,7 @@ export class ConfigurarJogoMemoriaComponent implements OnInit {
       ).subscribe((observer: any) => {
         this.loading = false;
         this.idJogo = observer;
+        this.jogosService.adicionarId(this.idJogo);
       });
     }else{
       this.tituloInvalido = true;

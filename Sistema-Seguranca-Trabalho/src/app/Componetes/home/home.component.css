@@ -4,4 +4,33 @@
     /* Equal to height of footer /
     / But also accounting for potential margin-bottom of last child */
     margin-bottom: -50px;
-  }
+}
+
+.main{
+  width: 30rem;
+  height: 20vh;
+  margin: auto;
+  margin-top: 30vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #323232;
+}
+
+.buttons-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons-container button{
+  height: 4rem;
+}
+
+:host >>> .buttons-container button .p-button-label{
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+}

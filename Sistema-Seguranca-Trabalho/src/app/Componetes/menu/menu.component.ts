@@ -16,7 +16,7 @@ import { VisualizacaoJogoMemoriaComponent } from '../visualizacao-jogo-memoria/v
 export class MenuComponent implements OnInit {
   items: MenuItem[] = [];
   constructor(
-    public authService: AuthService, private router: Router,
+    public authService: AuthService,
     public dialogService: DialogService) { }
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
         label: 'Criar jogo',
         icon: 'pi pi-plus-circle',
         command: (event) => {
-          this.mostraResultado();
+          this.criarJogo();
         }
       },
       {
@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
     ];
   }
 
-  private mostraResultado() {
+  private criarJogo() {
     const ref = this.dialogService.open(ConfigurarJogoMemoriaComponent, {
       header: '',
       width: '70%',

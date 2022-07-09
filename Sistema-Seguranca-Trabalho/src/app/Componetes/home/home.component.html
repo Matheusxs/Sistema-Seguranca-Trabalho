@@ -1,5 +1,10 @@
 <app-menu></app-menu>
 <div class="wrapper" >
-
+    <div class="main">
+        <div class="buttons-container">
+            <button pButton type="button" label="Criar jogo" (click)="criarJogo()" [style]="{'width': '100%'}" ></button>
+            <button pButton type="button" label="Visualizar meus jogos" (click)="mostraJogos()" [style]="{'width': '100%'}" ></button>
+        </div>
+    </div>
 </div>
 <app-rodape></app-rodape>

@@ -1,40 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { timer } from 'rxjs';
-import { AuthService } from 'src/app/Servicos/auth/auth.service';
+import { Component } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfigurarJogoMemoriaComponent } from '../configurar-jogo-memoria/configurar-jogo-memoria.component';
+import { VisualizacaoJogoMemoriaComponent } from '../visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [DialogService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent{
 
-  constructor(private authService: AuthService, 
-              private router: Router) {
+  constructor(
+    public dialogService: DialogService
+  ) {}
 
-   }
-  userReady = false;
-  ngOnInit(): void {
-    // if(!this.authService.userData && !this.authService.userReady){ 
-    //   this.router.navigate(["login"]);
-    // }else{
-    //   let time = timer(200, 1000).subscribe(() =>{
-    //     if(this.authService.userData != undefined){
-    //       this.userReady = true;
-    //       time.unsubscribe();
-    //     }
-    //   });
-    //   let time2 = timer(200, 1000).subscribe(() =>{
-    //     if(this.userReady){
-    //       if(this.authService.userData.admin !=undefined){
-    //         time2.unsubscribe();
-    //         if(this.authService.userData.admin){
-    //           this.router.navigate(['admin']);
-    //         }
-    //       }
-    //     }
-    //   });
-    // }
+  public criarJogo() {
+    const ref = this.dialogService.open(ConfigurarJogoMemoriaComponent, {
+      header: '',
+      width: '70%',
+      closable: true,
+    });
+  }
+
+  public mostraJogos() {
+    const ref = this.dialogService.open(VisualizacaoJogoMemoriaComponent, {
+      header: '',
+      width: '50%',
+      closable: true,
+    });
   }
 }

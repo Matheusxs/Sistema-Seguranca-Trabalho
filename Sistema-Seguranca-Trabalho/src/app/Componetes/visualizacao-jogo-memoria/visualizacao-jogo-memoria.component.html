@@ -27,7 +27,26 @@
             </div> -->
         </div>
     </span>
-    <span class="main-data" *ngIf="jogos.length != 0">
+    <span class="main-data" *ngIf="jogos.length != 0 || jogos_criados.length != 0">
+        <div *ngFor="let jogo of jogos_criados; let i = index">
+            <div class="data-row">
+                <div class="data-name">
+                    {{jogo.titulo}}<span class="texto-primario"> [Criado por Você]</span>
+                </div>
+                <div class="data-buttons">
+                    <div class="data-buttons-container">
+                        <span>Copiar</span>
+                        <button pButton type="button" (click)="copiarLink(jogo)" [style]="{'width': '100%', 'margin-bottom': '3px'}" label="jogar" ></button>
+                        <button pButton type="button" (click)="copiarLinkVisualizar(jogo)" [style]="{'width': '100%'}" label="visualizar" ></button>
+                    </div>
+                    <div class="data-buttons-container">
+                        <span>Acessar</span>
+                        <button pButton type="button" (click)="acessarLink(jogo)" [style]="{'width': '100%', 'margin-bottom': '3px'}" label="jogar" ></button>
+                        <button pButton type="button" (click)="acessarLinkVisualizar(jogo)" [style]="{'width': '100%'}" label="visualizar" ></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div *ngFor="let jogo of jogos; let i = index">
             <div class="data-row">
                 <div class="data-name">
@@ -37,14 +56,6 @@
                     {{jogo.pontuacao}}/10
                 </div>
             </div>
-            <!-- <div class="p-grid">
-                <div class="p-col-8">
-                    {{jogo.jogo_nome}}
-                </div>
-                <div class="p-col-4">
-                    {{jogo.pontuacao}}/10
-                </div>
-            </div> -->
         </div>
     </span>
     

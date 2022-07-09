@@ -1,8 +1,15 @@
+<p-toast></p-toast>
 <div class="p-grid">
     <div class="p-col-12">
         <h1 style="text-align: center;">
             {{jogo.getTitulo()}}
         </h1>
+    </div>
+    <div class="p-col-12">
+        <span class="p-float-label">
+            <input id="senha-input" [style]="{'width': '100%'}" [(ngModel)]="nome_jogador" type="text" pInputText> 
+            <label for="senha-input">Insira seu nome aqui para iniciar</label>
+        </span>
     </div>
     <div class="p-col-12">
         <h2 style="text-align: center;">

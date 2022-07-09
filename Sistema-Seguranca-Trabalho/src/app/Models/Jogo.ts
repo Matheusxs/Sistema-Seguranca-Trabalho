@@ -1,6 +1,9 @@
 import { Jogador } from "./Jogador";
 
 export class Jogo{
+    private id: string;
+    private criador_id: string= '';
+    private id_visualizar: string;
     private titulo: string = '';
     private tempo_inicio: number = 240;
     private tempo_max: number = 310;
@@ -12,6 +15,7 @@ export class Jogo{
     private jogadores: Jogador[] = [];
     
     public constructor(
+        criador_id: string,
         titulo: string,
         tempo_inicio: number,
         tempo_max: number,
@@ -21,6 +25,9 @@ export class Jogo{
         cartas_selecionadas: string[],
         quantidade_cartas: number
     ){
+        this.id = '';
+        this.id_visualizar = '';
+        this.criador_id = criador_id;
         this.titulo = titulo;
         this.tempo_inicio = tempo_inicio;
         this.tempo_max = tempo_max;
@@ -30,6 +37,18 @@ export class Jogo{
         this.cartas_selecionadas = cartas_selecionadas;
         this.quantidade_cartas = quantidade_cartas;
         this.jogadores = [];
+    }
+
+    public getId(): string{
+        return this.id;
+    }
+
+    public getIdVisualizar(): string{
+        return this.id_visualizar;
+    }
+
+    public getCriadorId(): string{
+        return this.criador_id;
     }
 
     public getTitulo(): string{
@@ -58,6 +77,18 @@ export class Jogo{
 
     public getJogadores(): Jogador[]{
         return this.jogadores;
+    }
+
+    public setIdVisualizar(id_visualizar: string){
+        this.id_visualizar = id_visualizar;
+    }
+
+    public setCriadorId(criador_id: string){
+        this.criador_id = criador_id;
+    }
+
+    public setId(id: string){
+        this.id = id;
     }
 
     public setTitulo(titulo: string){

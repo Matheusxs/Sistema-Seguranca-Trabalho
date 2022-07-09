@@ -29,6 +29,7 @@ export class JogosService {
         valor.forEach(function(doc) {
           let jogo: any = doc.data();
           let jogoO: Jogo = new Jogo(
+            jogo.criador_id,
             jogo.title,
             jogo.tempo_inicio,
             jogo.tempo_max,
@@ -51,9 +52,36 @@ export class JogosService {
     });
   }
 
+  public getJogosCriadosPorUmUsuario(id: string){
+    return new Observable(observer =>{
+      const jogoRef = this.afs.collection('Jogos').get().subscribe(valor =>{
+        console.log("Query Snapshot: ", valor);
+        let jogos: any[] = [];
+        valor.forEach(function(doc) {
+          let jogo: any = doc.data();
+          let jogoO: Jogo = new Jogo(
+            jogo.criador_id,
+            jogo.title,
+            jogo.tempo_inicio,
+            jogo.tempo_max,
+            jogo.quantidade_tentativas,
+            jogo.prioridade_tempo,
+            jogo.mostrar_cartas_antes,
+            jogo.cartas_seleciodadas,
+            jogo.quantidade_cartas);
+          jogoO.setId(jogo.id);
+          jogoO.setIdVisualizar(jogo.id_visualizar);
+          jogo.criador_id == id ? jogos.push(jogoO) : null;
+        });
+        observer.next(jogos);
+      });
+    });
+  }
+
   public criarJogo(jogo: Jogo, id_visualizar: string){
     return new Observable(observer =>{
       this.afs.collection('Jogos').add({
+        criador_id: jogo.getCriadorId(),
         id_visualizar: id_visualizar,
         title: jogo.getTitulo(),
         tempo_inicio: jogo.getTempoInicio(),
@@ -71,6 +99,13 @@ export class JogosService {
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
+    });
+  }
+
+  adicionarId(id: string){
+    console.log("Adicionando id: ", id);
+    this.afs.collection('Jogos').doc(id).update({
+      id: id
     });
   }
 

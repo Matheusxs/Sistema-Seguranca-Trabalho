@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.texto-primario{
+    color: #81D4FA;
+}
+
 .data-row{
     display: flex;
     flex-direction: row;
@@ -19,4 +23,21 @@
 
 .data-row:hover{
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+.data-buttons{
+    display: flex;
+    height: 5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.data-buttons-container{
+    display: flex;
+    height: 5rem;
+    padding: 5px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }

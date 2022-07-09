@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,16 @@ export class AuthService {
 
   userData: any;// Save logged in user data
   userReady = false;
+
+  status = new Observable<any>();
+
   constructor(public afs: AngularFirestore,
               public afAuth: AngularFireAuth,
               private router: Router,  
               private ngZone: NgZone) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -30,7 +35,14 @@ export class AuthService {
         localStorage.setItem('user', '{}');
         JSON.parse(localStorage.getItem('user')!);
       }
+      this.status = new Observable(observer => {
+        observer.next(this.userReady);
+      });
     });
+  }
+
+  isReady(){
+    return this.status;
   }
 
   // Sign in with email/password

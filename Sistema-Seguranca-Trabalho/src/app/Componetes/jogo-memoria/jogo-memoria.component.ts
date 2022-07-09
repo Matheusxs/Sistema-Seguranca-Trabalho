@@ -69,6 +69,7 @@ export class JogoMemoriaComponent implements OnInit {
           this.tempoMaximo = jogo.tempo_max;
           this.timerSegundos = this.tempoMaximo;
           this.jogo = new Jogo(
+            jogo.criador_id,
             jogo.title,
             jogo.tempo_inicio,
             jogo.tempo_max,
@@ -346,6 +347,7 @@ export class JogoMemoriaComponent implements OnInit {
         jogo: this.jogo
       }
     });
+    ref.onClose.subscribe((parms) => {this.jogador.nome = parms.nome});
     this.refJanela = ref;
 
     ref.onClose.subscribe(() =>{
