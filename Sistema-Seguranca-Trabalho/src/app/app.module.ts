@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire' ;
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireAuthGuard, AngularFireAuthGuardModule, redirectUnauthorizedTo } from "@angular/fire/auth-guard";
 
 //Modolos do Primeng
 import {ButtonModule} from 'primeng/button';
@@ -27,6 +28,7 @@ import {SliderModule} from 'primeng/slider';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ToastModule} from 'primeng/toast';
+import {TooltipModule} from 'primeng/tooltip';
 
 //Componetes do Sistema
 import { AppComponent } from './app.component';
@@ -47,15 +49,44 @@ import { ConfigurarJogoMemoriaComponent } from './Componetes/configurar-jogo-mem
 import { VisualizacaoJogoMemoriaComponent } from './Componetes/visualizacao-jogo-memoria/visualizacao-jogo-memoria.component';
 import { PickListComponent } from './Componetes/subcomponents/pick-list/pick-list.component';
 
+const redirectToLoginPage = () => redirectUnauthorizedTo('login');
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'cadastro', component: CadastroComponent},
-  {path: '', component: HomeComponent},
-  {path: 'admin', component: AdminComponent},
-  {path: 'validar-email', component: ValidarEmailComponent},
-  {path: 'atividade', component: JogoComponent},
-  {path: 'jogo-memoria', component: JogoMemoriaComponent}
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'cadastro',
+    component: CadastroComponent
+  },
+  {
+    path: '', component: HomeComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectToLoginPage}
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectToLoginPage}
+  },
+  {
+    path: 'validar-email',
+    component: ValidarEmailComponent
+  },
+  {
+    path: 'atividade',
+    component: JogoComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectToLoginPage}
+  },
+  {
+    path: 'jogo-memoria',
+    component: JogoMemoriaComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectToLoginPage}
+  }
 ];
 
 @NgModule({
@@ -86,6 +117,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseconfig),
     AngularFireAuthModule,
     BrowserAnimationsModule,
+    AngularFireAuthGuardModule,
     
     ButtonModule,
     InputTextModule,
@@ -102,6 +134,7 @@ const routes: Routes = [
     InputSwitchModule,
     ProgressBarModule,
     ToastModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],
