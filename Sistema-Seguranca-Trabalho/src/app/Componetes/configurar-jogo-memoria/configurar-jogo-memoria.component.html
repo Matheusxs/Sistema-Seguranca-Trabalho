@@ -30,7 +30,7 @@
                         <div class="p-col-12 linhaSlider">
                             <div class="p-grid">
                                 <div class="p-col-12">
-                                    <p-slider [(ngModel)]="quantidade_tentativas" [min]="1" [max]="50" (onChange)="mudarQuantidadeTentativas()"></p-slider>
+                                    <p-slider [(ngModel)]="quantidade_tentativas" [min]="1" [max]="50" (onChange)="mudarQuantidadeTentativas()" pTooltip="Após essa quantidade de tentativas o usuário começará a perder pontos dependendo da prioridade de tentativas escolhida."></p-slider>
                                 </div>
                                 <div class="p-col-12">
                                     <strong>
@@ -48,7 +48,7 @@
                         <div class="p-col-12 linhaSlider">
                             <div class="p-grid">
                                 <div class="p-col-12">
-                                    <p-slider [(ngModel)]="prioridade_tempo" [min]="0" [max]="100" [step]="10"></p-slider>
+                                    <p-slider [(ngModel)]="prioridade_tempo" [min]="0" [max]="100" [step]="10" pTooltip="Dependendo da porcentágem de prioridade tempo ou tentativas podem valer mais pontos."></p-slider>
                                 </div>
                                 <div class="p-col-6">
                                     <strong>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="p-col-12">
                             <div class="p-d-flex p-jc-center">
-                                <p-knob [(ngModel)]="tempo_inicio" [size]="100" [min]="0" [max]="tempo_max" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoInicio()"></p-knob>
+                                <p-knob [(ngModel)]="tempo_inicio" [size]="100" [min]="0" [max]="tempo_max" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoInicio()" pTooltip="Após essa quantidade de tempo o usuário começará a perder pontos dependendo da prioridade de tempo escolhida."></p-knob>
                             </div>
                         </div>    
                         <div>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="p-col-12">
                             <div class="p-d-flex p-jc-center">
-                                <p-knob [(ngModel)]="tempo_max" [size]="100" [min]="20" [max]="600" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoMax()"></p-knob>
+                                <p-knob [(ngModel)]="tempo_max" [size]="100" [min]="20" [max]="600" [step]="10" valueTemplate="{value} s" (onChange)="mudarTempoMax()" pTooltip="Tempo máximo que a atividade ficará aberta para cada usuário"></p-knob>
                             </div>
                         </div>    
                     </div>
