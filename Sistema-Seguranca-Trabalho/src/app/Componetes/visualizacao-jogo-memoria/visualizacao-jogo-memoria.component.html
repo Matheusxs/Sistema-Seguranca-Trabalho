@@ -28,35 +28,39 @@
         </div>
     </span>
     <span class="main-data" *ngIf="jogos.length != 0 || jogos_criados.length != 0">
-        <div *ngFor="let jogo of jogos_criados; let i = index">
-            <div class="data-row">
-                <div class="data-name">
-                    {{jogo.titulo}}<span class="texto-primario"> [Criado por Você]</span>
-                </div>
-                <div class="data-buttons">
-                    <div class="data-buttons-container">
-                        <span>Copiar</span>
-                        <button pButton type="button" (click)="copiarLink(jogo)" [style]="{'width': '100%', 'margin-bottom': '3px'}" label="jogar" ></button>
-                        <button pButton type="button" (click)="copiarLinkVisualizar(jogo)" [style]="{'width': '100%'}" label="visualizar" ></button>
+        <p-tabView>
+            <p-tabPanel header="Jogos criados por mim">
+                <div *ngFor="let jogo of jogos_criados; let i = index">
+                    <div class="data-row">
+                        <div class="data-name">
+                            {{jogo.titulo}}<span class="texto-primario"> [Criado por Você]</span>
+                        </div>
+                        <div class="data-buttons">
+                            <div class="data-buttons-container">
+                                <span>Copiar</span>
+                                <button pButton type="button" (click)="copiarLink(jogo)" [style]="{'width': '100%'}" label="link para jogar" ></button>
+                            </div>
+                            <div class="data-buttons-container">
+                                <span>Acessar</span>
+                                <button pButton type="button" (click)="acessarLinkVisualizar(jogo)" [style]="{'width': '100%'}" label="resultados" ></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="data-buttons-container">
-                        <span>Acessar</span>
-                        <button pButton type="button" (click)="acessarLink(jogo)" [style]="{'width': '100%', 'margin-bottom': '3px'}" label="jogar" ></button>
-                        <button pButton type="button" (click)="acessarLinkVisualizar(jogo)" [style]="{'width': '100%'}" label="visualizar" ></button>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Jogos que joguei">
+                <div *ngFor="let jogo of jogos; let i = index">
+                    <div class="data-row">
+                        <div class="data-name">
+                            {{jogo.jogo_nome}}
+                        </div>
+                        <div class="data-points">
+                            {{jogo.pontuacao}}/10
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div *ngFor="let jogo of jogos; let i = index">
-            <div class="data-row">
-                <div class="data-name">
-                    {{jogo.jogo_nome}}
-                </div>
-                <div class="data-points">
-                    {{jogo.pontuacao}}/10
-                </div>
-            </div>
-        </div>
+            </p-tabPanel>
+        </p-tabView>
     </span>
     
     <div class="p-col-12">
